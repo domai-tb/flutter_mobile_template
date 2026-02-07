@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:mobile_app_skeleton/core/app_scope.dart';
-import 'package:mobile_app_skeleton/core/settings.dart';
 import 'package:mobile_app_skeleton/widgets/app_segmented_triple_control.dart';
 import 'package:mobile_app_skeleton/l10n/l10n_x.dart';
 
@@ -95,7 +94,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(context.l10n.appTitle, style: theme.textTheme.displayMedium),
+                            Text(context.l10n.appTitle,
+                                style: theme.textTheme.displayMedium),
                             const SizedBox(height: 10),
                             Text(
                               context.l10n.onboardingIntroBody,
@@ -114,11 +114,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(context.l10n.onboardingPreferencesTitle, style: theme.textTheme.displayMedium),
+                            Text(context.l10n.onboardingPreferencesTitle,
+                                style: theme.textTheme.displayMedium),
                             const SizedBox(height: 20),
-                            Text(context.l10n.themeLabel, style: theme.textTheme.headlineSmall),
+                            Text(context.l10n.themeLabel,
+                                style: theme.textTheme.headlineSmall),
                             const SizedBox(height: 10),
-                            CampusSegmentedTripleControl(
+                            AppSegmentedTripleControl(
                               leftTitle: 'System',
                               centerTitle: 'Light',
                               rightTitle: 'Dark',
@@ -129,7 +131,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               },
                             ),
                             const SizedBox(height: 24),
-                            Text(context.l10n.accessibilityLabel, style: theme.textTheme.headlineSmall),
+                            Text(context.l10n.accessibilityLabel,
+                                style: theme.textTheme.headlineSmall),
                             const SizedBox(height: 10),
                             SwitchListTile.adaptive(
                               contentPadding: EdgeInsets.zero,
@@ -171,7 +174,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           }
                           _applySettings();
                         },
-                        child: Text(_pageIndex == 0 ? context.l10n.next : context.l10n.finish),
+                        child: Text(_pageIndex == 0
+                            ? context.l10n.next
+                            : context.l10n.finish),
                       ),
                     ],
                   ),

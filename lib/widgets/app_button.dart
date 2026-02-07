@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-enum CampusButtonType { normal, light }
+enum AppButtonType { normal, light }
 
-/// This widget adds a custom Button that uses the CampusApp design language
-class CampusButton extends StatelessWidget {
+/// Simple app-styled button used by the skeleton.
+class AppButton extends StatelessWidget {
   /// The displayed text inside the button
   final String text;
 
@@ -14,27 +14,27 @@ class CampusButton extends StatelessWidget {
   /// The callback that should be executed when the button is tapped
   final VoidCallback onTap;
 
-  /// Refers to the type of CampusButton in order to display it with a light or dark background
-  late final CampusButtonType type;
+  /// Controls whether the button is rendered for a normal or light background.
+  late final AppButtonType type;
 
-  CampusButton({
+  AppButton({
     super.key,
     required this.text,
     this.width = 330,
     this.height = 58,
     required this.onTap,
   }) {
-    type = CampusButtonType.normal;
+    type = AppButtonType.normal;
   }
 
-  CampusButton.light({
+  AppButton.light({
     super.key,
     required this.text,
     this.width = 330,
     this.height = 58,
     required this.onTap,
   }) {
-    type = CampusButtonType.light;
+    type = AppButtonType.light;
   }
 
   @override
@@ -50,18 +50,20 @@ class CampusButton extends StatelessWidget {
       ),
       child: Material(
         color: isLight
-            ? (type == CampusButtonType.normal ? Colors.black : const Color.fromRGBO(245, 246, 250, 1))
+            ? (type == AppButtonType.normal
+                ? Colors.black
+                : const Color.fromRGBO(245, 246, 250, 1))
             : const Color.fromRGBO(34, 40, 54, 1),
         borderRadius: BorderRadius.circular(15),
         child: InkWell(
           onTap: onTap,
           splashColor: isLight
-              ? (type == CampusButtonType.normal
+              ? (type == AppButtonType.normal
                   ? const Color.fromRGBO(255, 255, 255, 0.12)
                   : const Color.fromRGBO(0, 0, 0, 0.06))
               : const Color.fromRGBO(255, 255, 255, 0.06),
           highlightColor: isLight
-              ? (type == CampusButtonType.normal
+              ? (type == AppButtonType.normal
                   ? const Color.fromRGBO(255, 255, 255, 0.08)
                   : const Color.fromRGBO(0, 0, 0, 0.04))
               : const Color.fromRGBO(255, 255, 255, 0.04),
@@ -70,9 +72,11 @@ class CampusButton extends StatelessWidget {
             child: Text(
               text,
               style: isLight
-                  ? (type == CampusButtonType.normal
-                      ? theme.textTheme.labelMedium?.copyWith(color: Colors.white)
-                      : theme.textTheme.labelMedium?.copyWith(color: const Color.fromARGB(255, 146, 146, 146)))
+                  ? (type == AppButtonType.normal
+                      ? theme.textTheme.labelMedium
+                          ?.copyWith(color: Colors.white)
+                      : theme.textTheme.labelMedium?.copyWith(
+                          color: const Color.fromARGB(255, 146, 146, 146)))
                   : theme.textTheme.labelMedium,
             ),
           ),

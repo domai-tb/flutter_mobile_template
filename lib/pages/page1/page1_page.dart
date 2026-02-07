@@ -28,8 +28,10 @@ class Page1Page extends StatefulWidget {
   State<Page1Page> createState() => _Page1PageState();
 }
 
-class _Page1PageState extends State<Page1Page> with AutomaticKeepAliveClientMixin<Page1Page> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+class _Page1PageState extends State<Page1Page>
+    with AutomaticKeepAliveClientMixin<Page1Page> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   final ScrollController _scrollController = ScrollController();
 
   late Page1Usecases _usecases;
@@ -105,7 +107,7 @@ class _Page1PageState extends State<Page1Page> with AutomaticKeepAliveClientMixi
                           style: theme.textTheme.displayMedium,
                         ),
                       ),
-                      CampusIconButton(
+                      AppIconButton(
                         icon: _showSearch ? Icons.arrow_back : Icons.search,
                         onTap: () {
                           setState(() {
@@ -121,7 +123,7 @@ class _Page1PageState extends State<Page1Page> with AutomaticKeepAliveClientMixi
                 ),
                 const SizedBox(height: 10),
                 if (_showSearch)
-                  CampusSearchBar(
+                  AppSearchBar(
                     arrowHidden: true,
                     onBack: () {},
                     onChange: (q) {
@@ -138,12 +140,14 @@ class _Page1PageState extends State<Page1Page> with AutomaticKeepAliveClientMixi
                         onRefresh: _load,
                         child: ListView.builder(
                           controller: _scrollController,
-                          padding: EdgeInsets.only(bottom: Platform.isIOS ? 110 : 90, top: 10),
+                          padding: EdgeInsets.only(
+                              bottom: Platform.isIOS ? 110 : 90, top: 10),
                           itemCount: _loading ? 6 : _items.length,
                           itemBuilder: (context, index) {
                             if (_loading) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 8),
                                 child: Container(
                                   height: 72,
                                   decoration: BoxDecoration(
@@ -156,7 +160,8 @@ class _Page1PageState extends State<Page1Page> with AutomaticKeepAliveClientMixi
 
                             final item = _items[index];
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 8),
                               child: Material(
                                 color: theme.cardColor,
                                 borderRadius: BorderRadius.circular(16),
@@ -169,18 +174,21 @@ class _Page1PageState extends State<Page1Page> with AutomaticKeepAliveClientMixi
                                       children: [
                                         Expanded(
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 item.title,
-                                                style: theme.textTheme.headlineSmall,
+                                                style: theme
+                                                    .textTheme.headlineSmall,
                                               ),
                                               const SizedBox(height: 6),
                                               Text(
                                                 item.subtitle,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: theme.textTheme.bodyMedium,
+                                                style:
+                                                    theme.textTheme.bodyMedium,
                                               ),
                                             ],
                                           ),

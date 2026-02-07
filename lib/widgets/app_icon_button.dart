@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CampusIconButton extends StatelessWidget {
+class AppIconButton extends StatelessWidget {
   final IconData icon;
 
   final VoidCallback onTap;
@@ -10,7 +10,7 @@ class CampusIconButton extends StatelessWidget {
 
   final bool transparent;
 
-  const CampusIconButton({
+  const AppIconButton({
     super.key,
     required this.icon,
     required this.onTap,
@@ -45,15 +45,20 @@ class CampusIconButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         child: InkWell(
           onTap: onTap,
-          splashColor: isLight ? const Color.fromRGBO(0, 0, 0, 0.04) : const Color.fromRGBO(255, 255, 255, 0.04),
-          highlightColor:
-              isLight ? const Color.fromRGBO(0, 0, 0, 0.02) : const Color.fromRGBO(255, 255, 255, 0.02),
+          splashColor: isLight
+              ? const Color.fromRGBO(0, 0, 0, 0.04)
+              : const Color.fromRGBO(255, 255, 255, 0.04),
+          highlightColor: isLight
+              ? const Color.fromRGBO(0, 0, 0, 0.02)
+              : const Color.fromRGBO(255, 255, 255, 0.02),
           borderRadius: BorderRadius.circular(15),
           child: Center(
             child: Icon(
               icon,
               size: 22,
-              color: isLight ? Colors.black : const Color.fromRGBO(184, 186, 191, 1),
+              color: isLight
+                  ? Colors.black
+                  : const Color.fromRGBO(184, 186, 191, 1),
             ),
           ),
         ),

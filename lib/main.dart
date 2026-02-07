@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile_app_skeleton/core/app_scope.dart';
 import 'package:mobile_app_skeleton/core/app_services.dart';
+import 'package:mobile_app_skeleton/core/injection.dart' as ic;
 import 'package:mobile_app_skeleton/core/settings.dart';
 import 'package:mobile_app_skeleton/core/themes.dart';
 import 'package:mobile_app_skeleton/l10n/l10n.dart';
@@ -16,27 +17,29 @@ Future<void> main() async {
   // Disable noisy logs in release.
   if (kReleaseMode) debugPrint = (String? message, {int? wrapWidth}) => '';
 
-  final settings = await SettingsController.load();
-  final services = AppServices.create();
+  await ic.init();
+  final settings = ic.sl<SettingsController>();
+  final services = ic.sl<AppServices>();
 
   runApp(
     AppScope(
       settings: settings,
       services: services,
-      child: const CampusApp(),
+      child: const SkeletonApp(),
     ),
   );
 }
 
-class CampusApp extends StatefulWidget {
-  const CampusApp({super.key});
+class SkeletonApp extends StatefulWidget {
+  const SkeletonApp({super.key});
 
   @override
-  State<CampusApp> createState() => _CampusAppState();
+  State<SkeletonApp> createState() => _SkeletonAppState();
 }
 
-class _CampusAppState extends State<CampusApp> {
-  final GlobalKey<NavigatorState> _mainNavigatorKey = GlobalKey<NavigatorState>();
+class _SkeletonAppState extends State<SkeletonApp> {
+  final GlobalKey<NavigatorState> _mainNavigatorKey =
+      GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +49,11 @@ class _CampusAppState extends State<CampusApp> {
       animation: scope.settings,
       builder: (context, _) {
         final settings = scope.settings.settings;
-        final themeMode =
-            settings.useSystemDarkmode ? ThemeMode.system : (settings.useDarkmode ? ThemeMode.dark : ThemeMode.light);
-        final locale = settings.localeCode == null ? null : Locale(settings.localeCode!);
+        final themeMode = settings.useSystemDarkmode
+            ? ThemeMode.system
+            : (settings.useDarkmode ? ThemeMode.dark : ThemeMode.light);
+        final locale =
+            settings.localeCode == null ? null : Locale(settings.localeCode!);
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -64,7 +69,9 @@ class _CampusAppState extends State<CampusApp> {
             final mq = MediaQuery.of(context);
             return MediaQuery(
               data: mq.copyWith(
-                textScaler: settings.useSystemTextScaling ? mq.textScaler : TextScaler.noScaling,
+                textScaler: settings.useSystemTextScaling
+                    ? mq.textScaler
+                    : TextScaler.noScaling,
               ),
               child: child,
             );

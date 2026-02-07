@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// This widget allows the user to pick between three options.
 /// It is a linear set of three segments, each of which functions as a button.
-class CampusSegmentedTripleControl extends StatefulWidget {
+class AppSegmentedTripleControl extends StatefulWidget {
   /// The displayed text on the left button of the SegmentedControl
   final String leftTitle;
 
@@ -19,7 +19,7 @@ class CampusSegmentedTripleControl extends StatefulWidget {
   /// Initial selected segment: 0 (left), 1 (center), 2 (right).
   final int initialSelection;
 
-  const CampusSegmentedTripleControl({
+  const AppSegmentedTripleControl({
     super.key,
     required this.leftTitle,
     required this.centerTitle,
@@ -29,10 +29,11 @@ class CampusSegmentedTripleControl extends StatefulWidget {
   });
 
   @override
-  State<CampusSegmentedTripleControl> createState() => CampusSegmentedTripleControlState();
+  State<AppSegmentedTripleControl> createState() =>
+      AppSegmentedTripleControlState();
 }
 
-class CampusSegmentedTripleControlState extends State<CampusSegmentedTripleControl> {
+class AppSegmentedTripleControlState extends State<AppSegmentedTripleControl> {
   late AlignmentGeometry _hoverAligment;
   static const double _pickerWidth = 300;
 
@@ -94,10 +95,16 @@ class CampusSegmentedTripleControlState extends State<CampusSegmentedTripleContr
           // Background
           Container(
             decoration: BoxDecoration(
-              color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.colorScheme.surface,
-              borderRadius: isLight ? BorderRadius.circular(6) : BorderRadius.circular(10),
+              color: isLight
+                  ? const Color.fromRGBO(245, 246, 250, 1)
+                  : theme.colorScheme.surface,
+              borderRadius: isLight
+                  ? BorderRadius.circular(6)
+                  : BorderRadius.circular(10),
               border: Border.all(
-                color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : const Color.fromRGBO(34, 40, 54, 1),
+                color: isLight
+                    ? const Color.fromRGBO(245, 246, 250, 1)
+                    : const Color.fromRGBO(34, 40, 54, 1),
                 width: isLight ? 0 : 2,
               ),
             ),
@@ -112,9 +119,13 @@ class CampusSegmentedTripleControlState extends State<CampusSegmentedTripleContr
               height: 32,
               margin: const EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
-                color: isLight ? Colors.white : const Color.fromRGBO(34, 40, 54, 1),
+                color: isLight
+                    ? Colors.white
+                    : const Color.fromRGBO(34, 40, 54, 1),
                 borderRadius: BorderRadius.circular(6),
-                boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5)],
+                boxShadow: const [
+                  BoxShadow(color: Colors.black12, blurRadius: 5)
+                ],
               ),
             ),
           ),
@@ -127,7 +138,8 @@ class CampusSegmentedTripleControlState extends State<CampusSegmentedTripleContr
                   widget.leftTitle,
                   textAlign: TextAlign.center,
                   style: isLight
-                      ? theme.textTheme.labelMedium?.copyWith(color: Colors.black)
+                      ? theme.textTheme.labelMedium
+                          ?.copyWith(color: Colors.black)
                       : theme.textTheme.labelMedium,
                 ),
               ),
@@ -136,7 +148,8 @@ class CampusSegmentedTripleControlState extends State<CampusSegmentedTripleContr
                   widget.centerTitle,
                   textAlign: TextAlign.center,
                   style: isLight
-                      ? theme.textTheme.labelMedium?.copyWith(color: Colors.black)
+                      ? theme.textTheme.labelMedium
+                          ?.copyWith(color: Colors.black)
                       : theme.textTheme.labelMedium,
                 ),
               ),
@@ -145,7 +158,8 @@ class CampusSegmentedTripleControlState extends State<CampusSegmentedTripleContr
                   widget.rightTitle,
                   textAlign: TextAlign.center,
                   style: isLight
-                      ? theme.textTheme.labelMedium?.copyWith(color: Colors.black)
+                      ? theme.textTheme.labelMedium
+                          ?.copyWith(color: Colors.black)
                       : theme.textTheme.labelMedium,
                 ),
               ),

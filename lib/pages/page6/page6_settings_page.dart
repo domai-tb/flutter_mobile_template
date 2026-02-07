@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:mobile_app_skeleton/core/app_scope.dart';
-import 'package:mobile_app_skeleton/core/settings.dart';
 import 'package:mobile_app_skeleton/widgets/app_segmented_triple_control.dart';
 import 'package:mobile_app_skeleton/l10n/l10n_x.dart';
 
@@ -34,9 +33,10 @@ class Page6SettingsPage extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              Text(context.l10n.themeLabel, style: theme.textTheme.headlineSmall),
+              Text(context.l10n.themeLabel,
+                  style: theme.textTheme.headlineSmall),
               const SizedBox(height: 10),
-              CampusSegmentedTripleControl(
+              AppSegmentedTripleControl(
                 leftTitle: 'System',
                 centerTitle: 'Light',
                 rightTitle: 'Dark',
@@ -54,18 +54,24 @@ class Page6SettingsPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 24),
-              Text(context.l10n.languageLabel, style: theme.textTheme.headlineSmall),
+              Text(context.l10n.languageLabel,
+                  style: theme.textTheme.headlineSmall),
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 value: settings.localeCode ?? 'system',
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 ),
                 items: [
-                  DropdownMenuItem(value: 'system', child: Text(context.l10n.languageSystem)),
-                  DropdownMenuItem(value: 'en', child: Text(context.l10n.languageEnglish)),
-                  DropdownMenuItem(value: 'de', child: Text(context.l10n.languageGerman)),
+                  DropdownMenuItem(
+                      value: 'system',
+                      child: Text(context.l10n.languageSystem)),
+                  DropdownMenuItem(
+                      value: 'en', child: Text(context.l10n.languageEnglish)),
+                  DropdownMenuItem(
+                      value: 'de', child: Text(context.l10n.languageGerman)),
                 ],
                 onChanged: (val) {
                   if (val == null) return;
@@ -77,14 +83,16 @@ class Page6SettingsPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 24),
-              Text(context.l10n.accessibilityLabel, style: theme.textTheme.headlineSmall),
+              Text(context.l10n.accessibilityLabel,
+                  style: theme.textTheme.headlineSmall),
               const SizedBox(height: 10),
               SwitchListTile.adaptive(
                 contentPadding: EdgeInsets.zero,
                 title: Text(context.l10n.useSystemTextScaling),
                 value: settings.useSystemTextScaling,
                 onChanged: (val) {
-                  settingsController.update(settings.copyWith(useSystemTextScaling: val));
+                  settingsController
+                      .update(settings.copyWith(useSystemTextScaling: val));
                 },
               ),
             ],

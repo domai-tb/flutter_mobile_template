@@ -88,7 +88,7 @@ dependencies {
     // even on older Android devices with lower API levels. 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 
-    // Remove Campus App's requirement of Google Play Services
+    // Skeleton: keep Android config minimal; avoid unnecessary Play Services requirements.
     //
     // The Dio packages uses [cronet_http] libary to perform network requests. 
     // At default, this libary depends on Google Play services instead of 
