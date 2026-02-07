@@ -1,3 +1,53 @@
+# Settings (Persistent)
+
+The template keeps UI state in memory but persists user settings to local storage.
+
+## Where It Lives
+
+- `lib/core/settings.dart`
+
+`SettingsController` loads its initial state once at startup and persists updates via `shared_preferences`.
+
+## What Is Stored
+
+The `Settings` model is serialized to JSON and includes (at minimum):
+
+- Theme mode flags
+- Text scaling preference
+- Onboarding completion flag (`didCompleteOnboarding`)
+- Selected language (`localeCode`) or `null` for system language
+
+## Why JSON
+
+JSON keeps the migration story simple for a template:
+
+- Add a new field with a default in `Settings.fromJson(...)`
+- Old installs continue to load
+
+
+---
+
+# Shared Widgets
+
+Shared widgets live in:
+
+- `lib/widgets/`
+
+The goal is to keep page modules small and avoid duplicating UI components across features.
+
+## Included Examples
+
+- Buttons: `app_button.dart`
+- Icon button: `app_icon_button.dart`
+- Search bar: `app_search_bar.dart`
+- Segmented control: `app_segmented_triple_control.dart`
+- Scroll-to-top FAB: `scroll_to_top_button.dart`
+
+If a widget is only used by a single feature, keep it inside that feature folder instead.
+
+
+---
+
 # Architecture
 
 This repository is a Flutter app template that demonstrates a lightweight, layered structure you can copy for new features.
@@ -73,56 +123,6 @@ Text(context.l10n.page1Title)
 1. Add the key to all supported locales in `assets/l10n/`.
 2. Re-run localization generation (for example `flutter gen-l10n` or `flutter run` which triggers generation).
 3. Use the new key via `context.l10n.<key>`.
-
-
----
-
-# Settings (Persistent)
-
-The template keeps UI state in memory but persists user settings to local storage.
-
-## Where It Lives
-
-- `lib/core/settings.dart`
-
-`SettingsController` loads its initial state once at startup and persists updates via `shared_preferences`.
-
-## What Is Stored
-
-The `Settings` model is serialized to JSON and includes (at minimum):
-
-- Theme mode flags
-- Text scaling preference
-- Onboarding completion flag (`didCompleteOnboarding`)
-- Selected language (`localeCode`) or `null` for system language
-
-## Why JSON
-
-JSON keeps the migration story simple for a template:
-
-- Add a new field with a default in `Settings.fromJson(...)`
-- Old installs continue to load
-
-
----
-
-# Shared Widgets
-
-Shared widgets live in:
-
-- `lib/widgets/`
-
-The goal is to keep page modules small and avoid duplicating UI components across features.
-
-## Included Examples
-
-- Buttons: `app_button.dart`
-- Icon button: `app_icon_button.dart`
-- Search bar: `app_search_bar.dart`
-- Segmented control: `app_segmented_triple_control.dart`
-- Scroll-to-top FAB: `scroll_to_top_button.dart`
-
-If a widget is only used by a single feature, keep it inside that feature folder instead.
 
 
 ---
