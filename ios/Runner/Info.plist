@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>de_DE</string>
 	<key>CFBundleDisplayName</key>
-	<string>Campus App</string>
+	<string>Template App</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>campus_app</string>
+	<string>mobile_app_skeleton</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -28,7 +28,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>campus_app</string>
+			<string>mobile_app_skeleton</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>app</string>
@@ -46,21 +46,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NFCReaderUsageDescription</key>
-	<string>Allows the app to scan Mensa cards</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>The Campus App requires access to your photo library to retrieve your ticket</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>The Campus App requires access to the device's location as the interactive pathfinder uses it to the find the optimal path on campus.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>The Campus App only uses the location when in foreground, for the pathfinder to find the optimal path on campus.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>remote-notification</string>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -80,9 +67,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
-	<array>
-		<string>D2760000850100</string>
-	</array>
 </dict>
 </plist>

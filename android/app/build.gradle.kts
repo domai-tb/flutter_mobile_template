@@ -6,7 +6,6 @@ plugins {
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
-    id("com.google.gms.google-services")
 }
 
 val keystoreProperties = Properties()
@@ -16,7 +15,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "de.asta_bochum.campus_app"
+    namespace = "com.example.mobile_app_skeleton"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -34,7 +33,7 @@ android {
 
     defaultConfig {
         // Application ID: https://developer.android.com/studio/build/application-id.html
-        applicationId = "de.asta_bochum.campus_app"
+        applicationId = "com.example.mobile_app_skeleton"
         
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
@@ -80,7 +79,6 @@ flutter {
 }
 
 dependencies {
-    // Dependencies for Mensa card PopupActivity
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.2.10")
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("androidx.appcompat:appcompat-resources:1.7.1")

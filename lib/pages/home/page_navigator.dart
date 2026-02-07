@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:campus_app/pages/feed/feed_page.dart';
-import 'package:campus_app/pages/home/widgets/bottom_nav_bar.dart';
-import 'package:campus_app/pages/calendar/calendar_page.dart';
-import 'package:campus_app/pages/mensa/mensa_page.dart';
-import 'package:campus_app/pages/wallet/wallet_page.dart';
-import 'package:campus_app/pages/more/more_page.dart';
-import 'package:campus_app/pages/home/widgets/page_navigation_animation.dart';
-import 'package:campus_app/pages/navigation/outdoor_navigation_page.dart';
+import 'package:mobile_app_skeleton/pages/home/widgets/page_navigation_animation.dart';
+import 'package:mobile_app_skeleton/pages/page1/page1_page.dart';
+import 'package:mobile_app_skeleton/pages/page2/page2_page.dart';
+import 'package:mobile_app_skeleton/pages/page3/page3_page.dart';
+import 'package:mobile_app_skeleton/pages/page4/page4_page.dart';
+import 'package:mobile_app_skeleton/pages/page5/page5_page.dart';
+import 'package:mobile_app_skeleton/pages/page6/page6_page.dart';
 
-enum PageItem { feed, events, coupons, navigation, mensa, wallet, more }
+enum PageItem { page1, page2, page3, page4, page5, page6 }
 
 class PageNavigatorRoutes {
   /// The root-page is shown initially when this navbar-tab is the active one.
@@ -23,7 +22,7 @@ class PageNavigatorRoutes {
 /// Wraps the displayed page into a seperate [Navigator] in order to push new detail-pages
 /// (like opening a news-article) to a specific navigator-stack instead of the app-wide navigator-stack.
 ///
-/// This also allows to constantly show the [BottomNavBar] across multiple pages, even during transitions.
+/// This also allows to constantly show the bottom navigation bar across multiple pages, even during transitions.
 class NavBarNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState> mainNavigatorKey;
 
@@ -53,44 +52,41 @@ class NavBarNavigator extends StatelessWidget {
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context) {
     Widget rootPage;
     switch (pageItem) {
-      case PageItem.feed:
-        rootPage = FeedPage(
+      case PageItem.page1:
+        rootPage = Page1Page(
           mainNavigatorKey: mainNavigatorKey,
           pageEntryAnimationKey: pageEntryAnimationKey,
           pageExitAnimationKey: pageExitAnimationKey,
         );
         break;
-      case PageItem.events:
-        rootPage = CalendarPage(
+      case PageItem.page2:
+        rootPage = Page2Page(
           mainNavigatorKey: mainNavigatorKey,
           pageEntryAnimationKey: pageEntryAnimationKey,
           pageExitAnimationKey: pageExitAnimationKey,
         );
         break;
-      case PageItem.coupons:
-        rootPage = const Scaffold(); // Has to be replaced!
-        break;
-      case PageItem.mensa:
-        rootPage = MensaPage(
+      case PageItem.page4:
+        rootPage = Page4Page(
           mainNavigatorKey: mainNavigatorKey,
           pageEntryAnimationKey: pageEntryAnimationKey,
           pageExitAnimationKey: pageExitAnimationKey,
         );
         break;
-      case PageItem.navigation:
-        rootPage = NavigationPage(
+      case PageItem.page3:
+        rootPage = Page3Page(
           pageEntryAnimationKey: pageEntryAnimationKey,
           pageExitAnimationKey: pageExitAnimationKey,
         );
         break;
-      case PageItem.wallet:
-        rootPage = WalletPage(
+      case PageItem.page5:
+        rootPage = Page5Page(
           pageEntryAnimationKey: pageEntryAnimationKey,
           pageExitAnimationKey: pageExitAnimationKey,
         );
         break;
-      case PageItem.more:
-        rootPage = MorePage(
+      case PageItem.page6:
+        rootPage = Page6Page(
           mainNavigatorKey: mainNavigatorKey,
           pageEntryAnimationKey: pageEntryAnimationKey,
           pageExitAnimationKey: pageExitAnimationKey,

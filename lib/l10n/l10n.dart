@@ -104,6 +104,198 @@ abstract class AppLocalizations {
   /// **'Hello World!'**
   String get helloWorld;
 
+  /// No description provided for @appTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Template App'**
+  String get appTitle;
+
+  /// No description provided for @page1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Page 1'**
+  String get page1Title;
+
+  /// No description provided for @page2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Page 2'**
+  String get page2Title;
+
+  /// No description provided for @page3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Page 3'**
+  String get page3Title;
+
+  /// No description provided for @page4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Page 4'**
+  String get page4Title;
+
+  /// No description provided for @page5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Page 5'**
+  String get page5Title;
+
+  /// No description provided for @page6Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Page 6'**
+  String get page6Title;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @aboutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutTitle;
+
+  /// No description provided for @detailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Detail'**
+  String get detailTitle;
+
+  /// No description provided for @searchLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get searchLabel;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @finish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get finish;
+
+  /// No description provided for @onboardingIntroBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a skeleton app that preserves the architecture and UI shell.'**
+  String get onboardingIntroBody;
+
+  /// No description provided for @onboardingIntroHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace \"Page 1..Page 6\" with your own features.'**
+  String get onboardingIntroHint;
+
+  /// No description provided for @onboardingPreferencesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get onboardingPreferencesTitle;
+
+  /// No description provided for @themeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get themeLabel;
+
+  /// No description provided for @languageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageLabel;
+
+  /// No description provided for @languageSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get languageSystem;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageGerman.
+  ///
+  /// In en, this message translates to:
+  /// **'German'**
+  String get languageGerman;
+
+  /// No description provided for @accessibilityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get accessibilityLabel;
+
+  /// No description provided for @useSystemTextScaling.
+  ///
+  /// In en, this message translates to:
+  /// **'Use system text scaling'**
+  String get useSystemTextScaling;
+
+  /// No description provided for @walletPlaceholderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Placeholder for a wallet-style feature.'**
+  String get walletPlaceholderBody;
+
+  /// No description provided for @primaryAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Action'**
+  String get primaryAction;
+
+  /// No description provided for @secondaryAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary Action'**
+  String get secondaryAction;
+
+  /// No description provided for @primaryActionSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace this with your real action'**
+  String get primaryActionSnack;
+
+  /// No description provided for @secondaryActionSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Another placeholder action'**
+  String get secondaryActionSnack;
+
+  /// No description provided for @menuSettingsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Template app settings'**
+  String get menuSettingsSubtitle;
+
+  /// No description provided for @menuAboutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About this template'**
+  String get menuAboutSubtitle;
+
+  /// No description provided for @aboutBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This repository is a mobile app skeleton.\n\nReplace the placeholder pages (Page 1..Page 6) with your own features while keeping the architecture (datasources, repositories, usecases, entities, pages).'**
+  String get aboutBody;
+
   /// No description provided for @serverFailureMessage.
   ///
   /// In en, this message translates to:
@@ -149,14 +341,14 @@ abstract class AppLocalizations {
   /// No description provided for @login_prompt.
   ///
   /// In en, this message translates to:
-  /// **'Please login with your RUB-ID and password.'**
+  /// **'Please login with your username and password.'**
   String get login_prompt;
 
-  /// No description provided for @rubid.
+  /// No description provided for @username.
   ///
   /// In en, this message translates to:
-  /// **'Login-ID of your RUB-Account'**
-  String get rubid;
+  /// **'Username'**
+  String get username;
 
   /// No description provided for @password.
   ///

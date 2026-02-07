@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:campus_app/core/themes.dart';
-import 'package:campus_app/utils/widgets/custom_button.dart';
+import 'package:mobile_app_skeleton/widgets/custom_button.dart';
 
 /// A widget that displays an item in the bottom navigation menu which allows the user
 /// to switch between different pages. When active, the whole item is moved up and the title
 /// text fades in while also moving up. The item also changes its icon-color when it's the
 /// active navigation menu item.
 class BottomNavBarItem extends StatefulWidget {
-  /// Path to the image asset that should be shown when the menu item is active.
-  ///
-  /// ATTENTION: Only use .png-files
-  final String imagePathActive;
-
-  /// Path to the image asset that should be shown when the menu item is inactive.
-  ///
-  /// ATTENTION: Only use .png-files
-  final String imagePathInactive;
+  final IconData activeIcon;
+  final IconData inactiveIcon;
 
   /// Padding above and below the icon
   final double iconVerticalPadding;
@@ -35,8 +25,8 @@ class BottomNavBarItem extends StatefulWidget {
 
   const BottomNavBarItem({
     super.key,
-    required this.imagePathActive,
-    required this.imagePathInactive,
+    required this.activeIcon,
+    required this.inactiveIcon,
     required this.title,
     this.iconVerticalPadding = 10,
     this.iconPaddingLeft = 10,
@@ -61,6 +51,9 @@ class _BottomNavBarItemState extends State<BottomNavBarItem> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isLight = theme.brightness == Brightness.light;
+
     return Padding(
       padding: EdgeInsets.only(left: widget.iconPaddingLeft, right: widget.iconPaddingRight),
       child: AnimatedPadding(
@@ -78,22 +71,12 @@ class _BottomNavBarItemState extends State<BottomNavBarItem> {
                   top: widget.iconVerticalPadding,
                   bottom: widget.iconVerticalPadding,
                 ),
-                child: Image.asset(
-                  widget.isActive ? widget.imagePathActive : widget.imagePathInactive,
-                  height: iconHeight,
+                child: Icon(
+                  widget.isActive ? widget.activeIcon : widget.inactiveIcon,
+                  size: iconHeight,
                   color: widget.isActive
-                      ? Provider.of<ThemesNotifier>(context).currentThemeData.colorScheme.secondary
-                      : Provider.of<ThemesNotifier>(context, listen: false).currentTheme == AppThemes.light
-                          ? Colors.black
-                          : const Color.fromRGBO(184, 186, 191, 1),
-                  /* Provider.of<ThemesNotifier>(context, listen: false).currentTheme == AppThemes.light
-                    ? widget.isActive
-                        ? Provider.of<ThemesNotifier>(context).currentThemeData.colorScheme.secondary
-                        : Colors.black
-                    : widget.isActive
-                        ? const Color.fromRGBO(255, 107, 1, 1)
-                        : const Color.fromRGBO(184, 186, 191, 1), */
-                  filterQuality: FilterQuality.high,
+                      ? theme.colorScheme.secondary
+                      : (isLight ? Colors.black : const Color.fromRGBO(184, 186, 191, 1)),
                 ),
               ),
             ),
@@ -107,7 +90,7 @@ class _BottomNavBarItemState extends State<BottomNavBarItem> {
                 duration: animationDuration,
                 child: Text(
                   widget.title,
-                  style: Provider.of<ThemesNotifier>(context).currentThemeData.textTheme.labelSmall,
+                  style: theme.textTheme.labelSmall,
                 ),
               ),
             ),

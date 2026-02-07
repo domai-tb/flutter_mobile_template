@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:campus_app/core/themes.dart';
-import 'package:campus_app/utils/widgets/custom_button.dart';
+import 'package:mobile_app_skeleton/widgets/custom_button.dart';
 
 class SideNavBarItem extends StatefulWidget {
-  /// Path to the image asset that should be shown when the menu item is active.
-  ///
-  /// ATTENTION: Only use .png-files
-  final String imagePathActive;
-
-  /// Path to the image asset that should be shown when the menu item is inactive.
-  ///
-  /// ATTENTION: Only use .png-files
-  final String imagePathInactive;
+  final IconData activeIcon;
+  final IconData inactiveIcon;
 
   /// Set the icon height
   final double iconHeight;
@@ -35,8 +25,8 @@ class SideNavBarItem extends StatefulWidget {
 
   const SideNavBarItem({
     super.key,
-    required this.imagePathActive,
-    required this.imagePathInactive,
+    required this.activeIcon,
+    required this.inactiveIcon,
     this.iconHeight = 26,
     this.bottomIconPadding = 5,
     this.verticalPadding = 10,
@@ -52,6 +42,9 @@ class SideNavBarItem extends StatefulWidget {
 class _SideNavBarItemState extends State<SideNavBarItem> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isLight = theme.brightness == Brightness.light;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child:
@@ -65,27 +58,20 @@ class _SideNavBarItemState extends State<SideNavBarItem> {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 14, right: 14, bottom: widget.bottomIconPadding),
-                child: Image.asset(
-                  widget.isActive ? widget.imagePathActive : widget.imagePathInactive,
-                  height: widget.iconHeight,
+                child: Icon(
+                  widget.isActive ? widget.activeIcon : widget.inactiveIcon,
+                  size: widget.iconHeight,
                   color: widget.isActive
-                      ? Provider.of<ThemesNotifier>(context).currentThemeData.colorScheme.secondary
-                      : Provider.of<ThemesNotifier>(context, listen: false).currentTheme == AppThemes.light
-                          ? Colors.black
-                          : const Color.fromRGBO(184, 186, 191, 1),
-                  filterQuality: FilterQuality.high,
+                      ? theme.colorScheme.secondary
+                      : (isLight ? Colors.black : const Color.fromRGBO(184, 186, 191, 1)),
                 ),
               ),
               // Text
               Text(
                 widget.title,
                 style: widget.isActive
-                    ? Provider.of<ThemesNotifier>(context)
-                        .currentThemeData
-                        .textTheme
-                        .labelSmall
-                        ?.copyWith(fontWeight: FontWeight.w700)
-                    : Provider.of<ThemesNotifier>(context).currentThemeData.textTheme.labelSmall,
+                    ? theme.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w700)
+                    : theme.textTheme.labelSmall,
               ),
             ],
           ),

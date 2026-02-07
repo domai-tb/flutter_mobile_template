@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'package:campus_app/core/themes.dart';
-import 'package:campus_app/pages/home/page_navigator.dart';
-import 'package:campus_app/pages/home/widgets/side_nav_bar_item.dart';
+import 'package:mobile_app_skeleton/pages/home/page_navigator.dart';
+import 'package:mobile_app_skeleton/pages/home/widgets/side_nav_bar_item.dart';
+import 'package:mobile_app_skeleton/l10n/l10n_x.dart';
 
 class SideNavBar extends StatefulWidget {
   /// Needs the currently active page in order to highlight it
@@ -25,63 +24,65 @@ class SideNavBar extends StatefulWidget {
 class _SideNavBarState extends State<SideNavBar> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isLight = theme.brightness == Brightness.light;
+
     return Container(
       width: 80,
       padding: const EdgeInsets.only(top: 40, bottom: 10, left: 15, right: 15),
       decoration: BoxDecoration(
-        color: Provider.of<ThemesNotifier>(context, listen: false).currentTheme == AppThemes.light
-            ? const Color.fromRGBO(245, 246, 250, 1)
-            : Provider.of<ThemesNotifier>(context).currentThemeData.cardColor,
+        color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
       ),
       child: Column(
         children: [
-          // News Feed
+          // Page 1
           SideNavBarItem(
-            title: 'Feed',
-            imagePathActive: 'assets/img/icons/home-filled.png',
-            imagePathInactive: 'assets/img/icons/home-outlined.png',
-            onTap: () => widget.onSelectedPage(PageItem.feed),
-            isActive: widget.currentPage == PageItem.feed,
+            title: context.l10n.page1Title,
+            activeIcon: Icons.home,
+            inactiveIcon: Icons.home_outlined,
+            onTap: () => widget.onSelectedPage(PageItem.page1),
+            isActive: widget.currentPage == PageItem.page1,
           ),
-          // Calendar
+          // Page 2
           SideNavBarItem(
-            title: 'Events',
-            imagePathActive: 'assets/img/icons/calendar-filled.png',
-            imagePathInactive: 'assets/img/icons/calendar-outlined.png',
-            onTap: () => widget.onSelectedPage(PageItem.events),
-            isActive: widget.currentPage == PageItem.events,
+            title: context.l10n.page2Title,
+            activeIcon: Icons.calendar_month,
+            inactiveIcon: Icons.calendar_month_outlined,
+            onTap: () => widget.onSelectedPage(PageItem.page2),
+            isActive: widget.currentPage == PageItem.page2,
           ),
-          // Mensa
+          // Page 3
           SideNavBarItem(
-            title: 'Mensa',
-            imagePathActive: 'assets/img/icons/mensa-filled.png',
-            imagePathInactive: 'assets/img/icons/mensa-outlined.png',
-            onTap: () => widget.onSelectedPage(PageItem.mensa),
-            isActive: widget.currentPage == PageItem.mensa,
+            title: context.l10n.page3Title,
+            activeIcon: Icons.map,
+            inactiveIcon: Icons.map_outlined,
+            onTap: () => widget.onSelectedPage(PageItem.page3),
+            isActive: widget.currentPage == PageItem.page3,
           ),
+          // Page 4
           SideNavBarItem(
-            title: 'Karte',
-            imagePathActive: 'assets/img/icons/mensa-filled.png',
-            imagePathInactive: 'assets/img/icons/mensa-outlined.png',
-            onTap: () => widget.onSelectedPage(PageItem.navigation),
-            isActive: widget.currentPage == PageItem.navigation,
+            title: context.l10n.page4Title,
+            activeIcon: Icons.restaurant,
+            inactiveIcon: Icons.restaurant_outlined,
+            onTap: () => widget.onSelectedPage(PageItem.page4),
+            isActive: widget.currentPage == PageItem.page4,
           ),
-          // Wallet
+          // Page 5
           SideNavBarItem(
-            title: 'Wallet',
-            imagePathActive: 'assets/img/icons/wallet-filled.png',
-            imagePathInactive: 'assets/img/icons/wallet-outlined.png',
-            onTap: () => widget.onSelectedPage(PageItem.wallet),
-            isActive: widget.currentPage == PageItem.wallet,
+            title: context.l10n.page5Title,
+            activeIcon: Icons.account_balance_wallet,
+            inactiveIcon: Icons.account_balance_wallet_outlined,
+            onTap: () => widget.onSelectedPage(PageItem.page5),
+            isActive: widget.currentPage == PageItem.page5,
           ),
           const Expanded(child: SizedBox()),
-          // More
+          // Page 6
           SideNavBarItem(
-            title: 'Mehr',
-            imagePathActive: 'assets/img/icons/more.png',
-            imagePathInactive: 'assets/img/icons/more.png',
-            onTap: () => widget.onSelectedPage(PageItem.more),
-            isActive: widget.currentPage == PageItem.more,
+            title: context.l10n.page6Title,
+            activeIcon: Icons.more_horiz,
+            inactiveIcon: Icons.more_horiz,
+            onTap: () => widget.onSelectedPage(PageItem.page6),
+            isActive: widget.currentPage == PageItem.page6,
           ),
         ],
       ),

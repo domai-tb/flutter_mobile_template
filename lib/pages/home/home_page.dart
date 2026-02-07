@@ -1,14 +1,12 @@
 import 'dart:io' show Platform;
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
-import 'package:campus_app/core/themes.dart';
-import 'package:campus_app/core/settings.dart';
-import 'package:campus_app/pages/home/page_navigator.dart';
-import 'package:campus_app/pages/home/widgets/page_navigation_animation.dart';
-import 'package:campus_app/pages/home/widgets/bottom_nav_bar.dart';
-import 'package:campus_app/pages/home/widgets/side_nav_bar.dart';
+import 'package:mobile_app_skeleton/pages/home/page_navigator.dart';
+import 'package:mobile_app_skeleton/pages/home/widgets/page_navigation_animation.dart';
+import 'package:mobile_app_skeleton/pages/home/widgets/bottom_nav_bar.dart';
+import 'package:mobile_app_skeleton/pages/home/widgets/side_nav_bar.dart';
 
 /// The [HomePage] displays all general UI elements like the bottom nav-menu and
 /// handles the switching between the different pages.
@@ -24,31 +22,31 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   /// Creates a [GlobalKey] for each page that should be accessable within the bottom nav-menu
   Map<PageItem, GlobalKey<NavigatorState>> navigatorKeys = {
-    PageItem.feed: GlobalKey<NavigatorState>(),
-    PageItem.events: GlobalKey<NavigatorState>(),
-    PageItem.mensa: GlobalKey<NavigatorState>(),
-    PageItem.navigation: GlobalKey<NavigatorState>(),
-    PageItem.wallet: GlobalKey<NavigatorState>(),
-    PageItem.more: GlobalKey<NavigatorState>(),
+    PageItem.page1: GlobalKey<NavigatorState>(),
+    PageItem.page2: GlobalKey<NavigatorState>(),
+    PageItem.page3: GlobalKey<NavigatorState>(),
+    PageItem.page4: GlobalKey<NavigatorState>(),
+    PageItem.page5: GlobalKey<NavigatorState>(),
+    PageItem.page6: GlobalKey<NavigatorState>(),
   };
 
   /// Creates two [GlobalKey] for each page in order to control the exit- and
   /// entry-animation from outside the page
   Map<PageItem, GlobalKey<AnimatedExitState>> exitAnimationKeys = {
-    PageItem.feed: GlobalKey<AnimatedExitState>(),
-    PageItem.events: GlobalKey<AnimatedExitState>(),
-    PageItem.mensa: GlobalKey<AnimatedExitState>(),
-    PageItem.navigation: GlobalKey<AnimatedExitState>(),
-    PageItem.wallet: GlobalKey<AnimatedExitState>(),
-    PageItem.more: GlobalKey<AnimatedExitState>(),
+    PageItem.page1: GlobalKey<AnimatedExitState>(),
+    PageItem.page2: GlobalKey<AnimatedExitState>(),
+    PageItem.page3: GlobalKey<AnimatedExitState>(),
+    PageItem.page4: GlobalKey<AnimatedExitState>(),
+    PageItem.page5: GlobalKey<AnimatedExitState>(),
+    PageItem.page6: GlobalKey<AnimatedExitState>(),
   };
   Map<PageItem, GlobalKey<AnimatedEntryState>> entryAnimationKeys = {
-    PageItem.feed: GlobalKey<AnimatedEntryState>(),
-    PageItem.events: GlobalKey<AnimatedEntryState>(),
-    PageItem.mensa: GlobalKey<AnimatedEntryState>(),
-    PageItem.navigation: GlobalKey<AnimatedEntryState>(),
-    PageItem.wallet: GlobalKey<AnimatedEntryState>(),
-    PageItem.more: GlobalKey<AnimatedEntryState>(),
+    PageItem.page1: GlobalKey<AnimatedEntryState>(),
+    PageItem.page2: GlobalKey<AnimatedEntryState>(),
+    PageItem.page3: GlobalKey<AnimatedEntryState>(),
+    PageItem.page4: GlobalKey<AnimatedEntryState>(),
+    PageItem.page5: GlobalKey<AnimatedEntryState>(),
+    PageItem.page6: GlobalKey<AnimatedEntryState>(),
   };
 
   final SystemUiOverlayStyle lightSystemUiStyle = const SystemUiOverlayStyle(
@@ -81,7 +79,7 @@ class HomePageState extends State<HomePage> {
   );
 
   /// Holds the currently active page.
-  PageItem currentPage = PageItem.feed;
+  PageItem currentPage = PageItem.page1;
 
   /// Controls the Page View
   final PageController pageController = PageController();
@@ -163,49 +161,39 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    // Theme von System auslesen & Callback erstellen
-    final window = WidgetsBinding.instance.platformDispatcher;
-
-    window.onPlatformBrightnessChanged = () {
-      final brightness = window.platformBrightness;
-
-      // Callback wird ausgeführt, sofern System-Darkmode verwendet werden soll
-      if (Provider.of<SettingsHandler>(context, listen: false).currentSettings.useSystemDarkmode) {
-        if (brightness == Brightness.light) {
-          debugPrint('System ändert zu LightMode.');
-          if (Provider.of<ThemesNotifier>(context, listen: false).currentTheme == AppThemes.dark) {
-            Provider.of<ThemesNotifier>(context, listen: false).currentTheme = AppThemes.light;
-          }
-        } else if (brightness == Brightness.dark) {
-          debugPrint('System ändert zu DarkMode.');
-          if (Provider.of<ThemesNotifier>(context, listen: false).currentTheme == AppThemes.light) {
-            Provider.of<ThemesNotifier>(context, listen: false).currentTheme = AppThemes.dark;
-          }
-        }
-      }
-    };
-
     pageController.addListener(() {
       setState(() => pagePosition = pageController.page ?? 0);
     });
   }
 
   @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isPhone = MediaQuery.of(context).size.shortestSide < 600;
+    final isLight = theme.brightness == Brightness.light;
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: MediaQuery.of(context).size.shortestSide < 600
-          ? Provider.of<ThemesNotifier>(context, listen: false).currentTheme == AppThemes.light
-              ? lightSystemUiStyle
-              : darkSystemUiStyle
-          : Provider.of<ThemesNotifier>(context, listen: false).currentTheme == AppThemes.light
-              ? lightTabletSystemUiStyle
-              : darkTabletSystemUiStyle,
-      child: WillPopScope(
-        onWillPop: () async => !await navigatorKeys[currentPage]!.currentState!.maybePop(),
+      value: isPhone
+          ? (isLight ? lightSystemUiStyle : darkSystemUiStyle)
+          : (isLight ? lightTabletSystemUiStyle : darkTabletSystemUiStyle),
+      child: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          if (didPop) return;
+          final nav = navigatorKeys[currentPage]?.currentState;
+          if (nav == null) return;
+          unawaited(nav.maybePop());
+        },
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: Provider.of<ThemesNotifier>(context).currentThemeData.colorScheme.surface,
-          body: MediaQuery.of(context).size.shortestSide < 600
+          backgroundColor: theme.colorScheme.surface,
+          body: isPhone
               // Phone layout
               ? SafeArea(
                   bottom: false,
@@ -265,21 +253,13 @@ class HomePageState extends State<HomePage> {
               // Tablet layout
               : SafeArea(
                   child: Container(
-                    color: Provider.of<ThemesNotifier>(context, listen: false).currentTheme == AppThemes.light
-                        ? const Color.fromRGBO(245, 246, 250, 1)
-                        : Provider.of<ThemesNotifier>(context).currentThemeData.cardColor,
+                    color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
                           height: 20,
-                          color: Provider.of<ThemesNotifier>(
-                                    context,
-                                    listen: false,
-                                  ).currentTheme ==
-                                  AppThemes.light
-                              ? const Color.fromRGBO(245, 246, 250, 1)
-                              : Provider.of<ThemesNotifier>(context).currentThemeData.cardColor,
+                          color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
                         ),
                         Expanded(
                           child: Row(
@@ -293,20 +273,20 @@ class HomePageState extends State<HomePage> {
                                 child: Container(
                                   padding: const EdgeInsets.all(5),
                                   decoration: BoxDecoration(
-                                    color: Provider.of<ThemesNotifier>(context).currentThemeData.colorScheme.surface,
+                                    color: theme.colorScheme.surface,
                                     borderRadius: BorderRadius.circular(15),
                                   ),
                                   child: Center(
                                     child: SizedBox(
-                                      width: currentPage != PageItem.navigation ? 550 : null,
+                                      width: currentPage != PageItem.page3 ? 550 : null,
                                       child: Stack(
                                         children: [
-                                          buildOffstateNavigator(PageItem.feed),
-                                          buildOffstateNavigator(PageItem.events),
-                                          buildOffstateNavigator(PageItem.navigation),
-                                          buildOffstateNavigator(PageItem.mensa),
-                                          buildOffstateNavigator(PageItem.wallet),
-                                          buildOffstateNavigator(PageItem.more),
+                                          buildOffstateNavigator(PageItem.page1),
+                                          buildOffstateNavigator(PageItem.page2),
+                                          buildOffstateNavigator(PageItem.page3),
+                                          buildOffstateNavigator(PageItem.page4),
+                                          buildOffstateNavigator(PageItem.page5),
+                                          buildOffstateNavigator(PageItem.page6),
                                         ],
                                       ),
                                     ),
@@ -316,26 +296,14 @@ class HomePageState extends State<HomePage> {
                               // Detail space
                               Container(
                                 width: 20,
-                                color: Provider.of<ThemesNotifier>(
-                                          context,
-                                          listen: false,
-                                        ).currentTheme ==
-                                        AppThemes.light
-                                    ? const Color.fromRGBO(245, 246, 250, 1)
-                                    : Provider.of<ThemesNotifier>(context).currentThemeData.cardColor,
+                                color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
                               ),
                             ],
                           ),
                         ),
                         Container(
                           height: 20,
-                          color: Provider.of<ThemesNotifier>(
-                                    context,
-                                    listen: false,
-                                  ).currentTheme ==
-                                  AppThemes.light
-                              ? const Color.fromRGBO(245, 246, 250, 1)
-                              : Provider.of<ThemesNotifier>(context).currentThemeData.cardColor,
+                          color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
                         ),
                       ],
                     ),
