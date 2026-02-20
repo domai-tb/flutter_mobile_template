@@ -15,8 +15,8 @@ class Invalid2FATokenFailure extends Failure {}
 /// user has to authenticate
 class NotAuthenticatedFailure extends Failure {}
 
-/// their isn't data to display or update
+/// there isn't data to display or update
 class NoDataFailure extends Failure {}
 
 /// caching goes wrong
-class CachFailure extends Failure {}
+class CacheFailure extends Failure {}
