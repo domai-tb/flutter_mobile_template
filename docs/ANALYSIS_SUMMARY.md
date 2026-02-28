@@ -128,23 +128,23 @@ This document summarizes the comprehensive analysis performed on the Flutter mob
 **Problem**: Hardcoded configuration values
 
 **Solution**:
-- Added `flutter_dotenv` package (v5.2.1)
-- Created `EnvironmentConfig` loader class
-- Added `.env`, `.env.dev`, `.env.prod` support
-- Created `.env.example` template
+- Created `EnvironmentConfig` class using compile-time constants
+- Uses `--dart-define` flags for environment-specific values
+- Removed runtime .env file loading (reduces app bloat)
+- Updated `.env.example` as reference documentation
 - Added type-safe configuration getters
 
 **Files Changed**:
-- `lib/core/environment_config.dart` (NEW)
-- `.env.example` (NEW)
-- `.env` (NEW)
-- `pubspec.yaml`
+- `lib/core/environment_config.dart` (UPDATED - now uses compile-time constants)
+- `.env.example` (UPDATED - now reference only)
+- `pubspec.yaml` (removed flutter_dotenv and .env asset references)
 
 **Benefits**:
-- Separate configs for dev/staging/prod
-- No hardcoded API URLs or secrets
+- No .env files bundled in the app (smaller app size)
+- Compile-time constants for better performance
+- No runtime file loading overhead
+- Separate configs for dev/staging/prod via build-time flags
 - Type-safe configuration access
-- Easy to add new config values
 
 ### 7. Connectivity Monitoring (Medium Priority)
 
@@ -286,7 +286,6 @@ This document summarizes the comprehensive analysis performed on the Flutter mob
 | `dio` | ^5.7.0 | HTTP client |
 | `connectivity_plus` | ^6.0.5 | Network connectivity |
 | `logger` | ^2.4.0 | Logging framework |
-| `flutter_dotenv` | ^5.2.1 | Environment configuration |
 | `freezed_annotation` | ^2.4.4 | Freezed annotations |
 | `json_annotation` | ^4.9.0 | JSON serialization annotations |
 | `equatable` | ^2.0.7 | Value equality |
@@ -404,8 +403,8 @@ Write tests using the provided examples as templates
 
 ## Security Improvements
 
-- **Environment Variables**: Secrets not hardcoded
-- **.env Files**: Properly gitignored
+- **Environment Variables**: Configuration via compile-time constants, not runtime files
+- **No Bundled Secrets**: No .env files bundled in app assets (reduces attack surface)
 - **HTTP Client**: Proper error handling prevents leaking details
 - **Authentication**: Exception type provided for auth errors
 

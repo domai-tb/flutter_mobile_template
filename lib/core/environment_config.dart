@@ -1,83 +1,61 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 /// Environment configuration manager.
 ///
-/// Loads and provides access to environment-specific configuration values.
-/// Values are loaded from .env files based on the current environment.
+/// Provides access to environment-specific configuration values using
+/// compile-time constants via --dart-define flags or hardcoded defaults.
 ///
 /// Usage:
 /// ```dart
-/// await EnvironmentConfig.load();
 /// final apiUrl = EnvironmentConfig.apiBaseUrl;
+/// final timeout = EnvironmentConfig.apiTimeout;
+/// ```
+///
+/// To override values at build time, use --dart-define:
+/// ```bash
+/// flutter run --dart-define=API_BASE_URL=https://api.prod.com
+/// flutter build apk --dart-define=API_BASE_URL=https://api.prod.com --dart-define=LOG_LEVEL=error
 /// ```
 class EnvironmentConfig {
-  static bool _isLoaded = false;
+  // Private constructor to prevent instantiation
+  EnvironmentConfig._();
 
-  /// Load environment configuration from .env file.
-  ///
-  /// Attempts to load environment-specific .env file based on the flavor.
-  /// Falls back to default .env file if specific one doesn't exist.
-  static Future<void> load({String? flavor}) async {
-    if (_isLoaded) return;
-
-    try {
-      // Try to load flavor-specific .env file first
-      if (flavor != null) {
-        await dotenv.load(fileName: '.env.$flavor');
-      } else {
-        await dotenv.load(fileName: '.env');
-      }
-      _isLoaded = true;
-    } catch (e) {
-      // If specific file doesn't exist, try default
-      try {
-        await dotenv.load(fileName: '.env');
-        _isLoaded = true;
-      } catch (e) {
-        // No .env file found - use default values
-        _isLoaded = true;
-      }
-    }
+  /// Get environment variable value from compile-time constant.
+  static const String _getEnv(String key, String defaultValue) {
+    return String.fromEnvironment(key, defaultValue: defaultValue);
   }
 
-  /// Get environment variable value.
-  static String get(String key, {String defaultValue = ''}) {
-    return dotenv.get(key, fallback: defaultValue);
+  /// Get boolean environment variable.
+  static const bool _getEnvBool(String key, {bool defaultValue = false}) {
+    return bool.fromEnvironment(key, defaultValue: defaultValue);
   }
 
-  /// Get environment variable value or null if not found.
-  static String? maybeGet(String key) {
-    return dotenv.maybeGet(key);
+  /// Get integer environment variable.
+  static const int _getEnvInt(String key, {int defaultValue = 0}) {
+    return int.fromEnvironment(key, defaultValue: defaultValue);
   }
 
   // Commonly used configuration values with defaults
 
   /// Base URL for API requests.
-  static String get apiBaseUrl =>
-      get('API_BASE_URL', defaultValue: 'https://api.example.com');
+  /// Override with: --dart-define=API_BASE_URL=https://api.example.com
+  static const String apiBaseUrl = _getEnv('API_BASE_URL', 'https://api.example.com');
 
   /// API request timeout in milliseconds.
-  static int get apiTimeout =>
-      int.tryParse(get('API_TIMEOUT', defaultValue: '30000')) ?? 30000;
+  /// Override with: --dart-define=API_TIMEOUT=30000
+  static const int apiTimeout = _getEnvInt('API_TIMEOUT', defaultValue: 30000);
 
   /// Whether analytics is enabled.
-  static bool get enableAnalytics =>
-      get('ENABLE_ANALYTICS', defaultValue: 'false').toLowerCase() == 'true';
+  /// Override with: --dart-define=ENABLE_ANALYTICS=true
+  static const bool enableAnalytics = _getEnvBool('ENABLE_ANALYTICS', defaultValue: false);
 
   /// Whether crash reporting is enabled.
-  static bool get enableCrashReporting =>
-      get('ENABLE_CRASH_REPORTING', defaultValue: 'false').toLowerCase() ==
-      'true';
+  /// Override with: --dart-define=ENABLE_CRASH_REPORTING=true
+  static const bool enableCrashReporting = _getEnvBool('ENABLE_CRASH_REPORTING', defaultValue: false);
 
   /// Current log level.
-  static String get logLevel => get('LOG_LEVEL', defaultValue: 'info');
+  /// Override with: --dart-define=LOG_LEVEL=debug
+  static const String logLevel = _getEnv('LOG_LEVEL', 'info');
 
   /// Application name.
-  static String get appName =>
-      get('APP_NAME', defaultValue: 'Mobile App Skeleton');
-
-  /// Reset the loaded state (useful for testing).
-  static void reset() {
-    _isLoaded = false;
-  }
+  /// Override with: --dart-define=APP_NAME=My App
+  static const String appName = _getEnv('APP_NAME', 'Mobile App Skeleton');
 }

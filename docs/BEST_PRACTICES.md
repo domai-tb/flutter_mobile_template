@@ -83,21 +83,28 @@ AppLogger.e('Error occurred', error: exception, stackTrace: stack);
 
 ### 5. Environment Configuration
 
-Support for multiple environments using `.env` files:
+Support for multiple environments using compile-time constants via `--dart-define`:
 
 ```dart
-await EnvironmentConfig.load(); // Load .env
-await EnvironmentConfig.load(flavor: 'dev'); // Load .env.dev
-await EnvironmentConfig.load(flavor: 'prod'); // Load .env.prod
-
 final apiUrl = EnvironmentConfig.apiBaseUrl;
 final timeout = EnvironmentConfig.apiTimeout;
 ```
 
+To override configuration values for different environments:
+
+```bash
+# Development
+flutter run --dart-define=API_BASE_URL=https://dev-api.example.com --dart-define=LOG_LEVEL=debug
+
+# Production
+flutter build apk --dart-define=API_BASE_URL=https://api.example.com --dart-define=LOG_LEVEL=error
+```
+
 **Benefits:**
-- Separate configuration for dev/staging/prod
-- No hardcoded API URLs or keys
-- Easy to add new configuration values
+- Separate configuration for dev/staging/prod via build-time flags
+- No runtime file loading overhead
+- No .env files bundled in the app (smaller app size)
+- Compile-time constants for better performance
 - Type-safe access to config values
 
 ### 6. Connectivity Monitoring

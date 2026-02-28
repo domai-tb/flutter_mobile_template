@@ -84,20 +84,19 @@ docs/
    flutter pub get
    ```
 
-3. **Configure environment**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your configuration
-   ```
-
-4. **Run code generation**
+3. **Run code generation**
    ```bash
    dart run build_runner build --delete-conflicting-outputs
    ```
 
-5. **Run the app**
+4. **Run the app**
    ```bash
    flutter run
+   ```
+
+   **Optional**: Override configuration values for different environments:
+   ```bash
+   flutter run --dart-define=API_BASE_URL=https://dev-api.example.com --dart-define=LOG_LEVEL=debug
    ```
 
 ### Running Tests
@@ -178,20 +177,26 @@ dart run build_runner watch --delete-conflicting-outputs
 
 ## Environment Configuration
 
-The template supports multiple environments using `.env` files:
+The template supports multiple environments using compile-time constants via `--dart-define` flags:
 
-- `.env` - Development environment (committed to repo)
-- `.env.dev` - Development (can be gitignored)
-- `.env.prod` - Production (gitignored)
+**Available Configuration Values:**
+- `API_BASE_URL` - Base URL for API requests (default: `https://api.example.com`)
+- `API_TIMEOUT` - API timeout in milliseconds (default: `30000`)
+- `ENABLE_ANALYTICS` - Enable analytics (default: `false`)
+- `ENABLE_CRASH_REPORTING` - Enable crash reporting (default: `false`)
+- `LOG_LEVEL` - Log level (default: `info`)
+- `APP_NAME` - Application name (default: `Mobile App Skeleton`)
 
-**Available Configuration:**
+**Usage Examples:**
+
+Development build:
+```bash
+flutter run --dart-define=API_BASE_URL=https://dev-api.example.com --dart-define=LOG_LEVEL=debug
 ```
-API_BASE_URL=https://api.example.com
-API_TIMEOUT=30000
-ENABLE_ANALYTICS=false
-ENABLE_CRASH_REPORTING=false
-LOG_LEVEL=debug
-APP_NAME=My App
+
+Production build:
+```bash
+flutter build apk --dart-define=API_BASE_URL=https://api.prod.com --dart-define=LOG_LEVEL=error --dart-define=ENABLE_ANALYTICS=true
 ```
 
 Access in code:
@@ -199,6 +204,12 @@ Access in code:
 final apiUrl = EnvironmentConfig.apiBaseUrl;
 final timeout = EnvironmentConfig.apiTimeout;
 ```
+
+**Benefits:**
+- No .env files bundled in the app (smaller app size)
+- Compile-time constants for better performance
+- No runtime file loading overhead
+- Separate configuration per build without changing code
 
 ## Best Practices
 
@@ -230,7 +241,6 @@ Workflow runs on pushes and PRs to `main`, `develop`, and `skeleton` branches.
 | `freezed` | Immutable classes & code generation |
 | `dio` | HTTP client |
 | `logger` | Logging framework |
-| `flutter_dotenv` | Environment configuration |
 | `connectivity_plus` | Network connectivity monitoring |
 | `mocktail` | Testing mocks |
 | `shared_preferences` | Local storage |

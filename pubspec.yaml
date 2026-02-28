@@ -34,9 +34,6 @@ dependencies:
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
 
-  # Environment Configuration
-  flutter_dotenv: ^5.2.1
-
   # Utilities
   equatable: ^2.0.7
 
@@ -61,6 +58,3 @@ flutter:
   # Assets
   assets:
     - assets/l10n/
-    - .env
-    - .env.dev
-    - .env.prod
