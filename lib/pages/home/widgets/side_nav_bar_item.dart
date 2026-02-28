@@ -57,20 +57,27 @@ class _SideNavBarItemState extends State<SideNavBarItem> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 14, right: 14, bottom: widget.bottomIconPadding),
+                padding: EdgeInsets.only(
+                  left: 14,
+                  right: 14,
+                  bottom: widget.bottomIconPadding,
+                ),
                 child: Icon(
                   widget.isActive ? widget.activeIcon : widget.inactiveIcon,
                   size: widget.iconHeight,
                   color: widget.isActive
                       ? theme.colorScheme.secondary
-                      : (isLight ? Colors.black : const Color.fromRGBO(184, 186, 191, 1)),
+                      : (isLight
+                          ? Colors.black
+                          : const Color.fromRGBO(184, 186, 191, 1)),
                 ),
               ),
               // Text
               Text(
                 widget.title,
                 style: widget.isActive
-                    ? theme.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w700)
+                    ? theme.textTheme.labelSmall
+                        ?.copyWith(fontWeight: FontWeight.w700)
                     : theme.textTheme.labelSmall,
               ),
             ],

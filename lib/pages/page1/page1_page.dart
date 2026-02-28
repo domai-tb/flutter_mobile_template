@@ -46,11 +46,6 @@ class _Page1PageState extends State<Page1Page>
   bool get wantKeepAlive => true;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_wired) return;
@@ -141,13 +136,17 @@ class _Page1PageState extends State<Page1Page>
                         child: ListView.builder(
                           controller: _scrollController,
                           padding: EdgeInsets.only(
-                              bottom: Platform.isIOS ? 110 : 90, top: 10),
+                            bottom: Platform.isIOS ? 110 : 90,
+                            top: 10,
+                          ),
                           itemCount: _loading ? 6 : _items.length,
                           itemBuilder: (context, index) {
                             if (_loading) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 8),
+                                  horizontal: 20,
+                                  vertical: 8,
+                                ),
                                 child: Container(
                                   height: 72,
                                   decoration: BoxDecoration(
@@ -161,7 +160,9 @@ class _Page1PageState extends State<Page1Page>
                             final item = _items[index];
                             return Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 8),
+                                horizontal: 20,
+                                vertical: 8,
+                              ),
                               child: Material(
                                 color: theme.cardColor,
                                 borderRadius: BorderRadius.circular(16),

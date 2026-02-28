@@ -1,0 +1,29 @@
+# Build configuration for code generation
+targets:
+  $default:
+    builders:
+      freezed:
+        enabled: true
+        generate_for:
+          - lib/**/*.dart
+        options:
+          # Freezed configuration
+          union_key: 'type'
+          union_value_case: 'pascal'
+
+      json_serializable:
+        enabled: true
+        generate_for:
+          - lib/**/*.dart
+        options:
+          # JSON serialization configuration
+          any_map: false
+          checked: true
+          create_factory: true
+          create_to_json: true
+          disallow_unrecognized_keys: false
+          explicit_to_json: true
+          field_rename: none
+          generic_argument_factories: false
+          ignore_unannotated: false
+          include_if_null: true

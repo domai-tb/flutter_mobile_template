@@ -27,8 +27,11 @@ class Page1DataSource {
     if (trimmed.isEmpty) return items;
 
     return items
-        .where((e) => e.title.toLowerCase().contains(trimmed) || e.subtitle.toLowerCase().contains(trimmed))
+        .where(
+          (e) =>
+              e.title.toLowerCase().contains(trimmed) ||
+              e.subtitle.toLowerCase().contains(trimmed),
+        )
         .toList(growable: false);
   }
 }
-

@@ -55,9 +55,14 @@ class _BottomNavBarItemState extends State<BottomNavBarItem> {
     final isLight = theme.brightness == Brightness.light;
 
     return Padding(
-      padding: EdgeInsets.only(left: widget.iconPaddingLeft, right: widget.iconPaddingRight),
+      padding: EdgeInsets.only(
+        left: widget.iconPaddingLeft,
+        right: widget.iconPaddingRight,
+      ),
       child: AnimatedPadding(
-        padding: widget.isActive ? const EdgeInsets.only(top: 2) : const EdgeInsets.only(top: 11),
+        padding: widget.isActive
+            ? const EdgeInsets.only(top: 2)
+            : const EdgeInsets.only(top: 11),
         duration: animationDuration,
         curve: animationCurve,
         child: Column(
@@ -76,13 +81,17 @@ class _BottomNavBarItemState extends State<BottomNavBarItem> {
                   size: iconHeight,
                   color: widget.isActive
                       ? theme.colorScheme.secondary
-                      : (isLight ? Colors.black : const Color.fromRGBO(184, 186, 191, 1)),
+                      : (isLight
+                          ? Colors.black
+                          : const Color.fromRGBO(184, 186, 191, 1)),
                 ),
               ),
             ),
             // Text
             AnimatedPadding(
-              padding: widget.isActive ? EdgeInsets.zero : const EdgeInsets.only(top: 10),
+              padding: widget.isActive
+                  ? EdgeInsets.zero
+                  : const EdgeInsets.only(top: 10),
               duration: animationDuration,
               curve: animationCurve,
               child: AnimatedOpacity(

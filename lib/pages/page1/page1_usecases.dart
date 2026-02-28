@@ -6,6 +6,6 @@ class Page1Usecases {
 
   const Page1Usecases({required this.repository});
 
-  Future<List<Page1ItemEntity>> getItems({String query = ''}) => repository.listItems(query: query);
+  Future<List<Page1ItemEntity>> getItems({String query = ''}) =>
+      repository.listItems(query: query);
 }
-

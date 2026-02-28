@@ -37,7 +37,8 @@ class AnimatedEntry extends StatefulWidget {
   State<AnimatedEntry> createState() => AnimatedEntryState();
 }
 
-class AnimatedEntryState extends State<AnimatedEntry> with TickerProviderStateMixin {
+class AnimatedEntryState extends State<AnimatedEntry>
+    with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<double> _positionAnimation;
@@ -137,7 +138,8 @@ class AnimatedExit extends StatefulWidget {
   State<AnimatedExit> createState() => AnimatedExitState();
 }
 
-class AnimatedExitState extends State<AnimatedExit> with TickerProviderStateMixin {
+class AnimatedExitState extends State<AnimatedExit>
+    with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
 
@@ -149,7 +151,9 @@ class AnimatedExitState extends State<AnimatedExit> with TickerProviderStateMixi
     await _animationController.reverse();
 
     // Optional delay
-    if (widget.delayAfterAnimation != Duration.zero) await Future.delayed(widget.delayAfterAnimation);
+    if (widget.delayAfterAnimation != Duration.zero) {
+      await Future.delayed(widget.delayAfterAnimation);
+    }
 
     return true;
   }
