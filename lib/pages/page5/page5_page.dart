@@ -35,7 +35,6 @@ class _Page5PageState extends State<Page5Page>
   @override
   bool get wantKeepAlive => true;
 
-
   @override
   void dispose() {
     _scrollController.dispose();
@@ -82,8 +81,10 @@ class _Page5PageState extends State<Page5Page>
                     controller: _scrollController,
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 120),
                     children: [
-                      Text(context.l10n.page5Title,
-                          style: theme.textTheme.displayMedium,),
+                      Text(
+                        context.l10n.page5Title,
+                        style: theme.textTheme.displayMedium,
+                      ),
                       const SizedBox(height: 10),
                       Text(
                         context.l10n.walletPlaceholderBody,
@@ -114,11 +115,15 @@ class _Page5PageState extends State<Page5Page>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(c.title,
-                                          style: theme.textTheme.headlineSmall,),
+                                      Text(
+                                        c.title,
+                                        style: theme.textTheme.headlineSmall,
+                                      ),
                                       const SizedBox(height: 6),
-                                      Text(c.value,
-                                          style: theme.textTheme.bodyMedium,),
+                                      Text(
+                                        c.value,
+                                        style: theme.textTheme.bodyMedium,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -133,7 +138,8 @@ class _Page5PageState extends State<Page5Page>
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                                content: Text(context.l10n.primaryActionSnack),),
+                              content: Text(context.l10n.primaryActionSnack),
+                            ),
                           );
                         },
                       ),
@@ -143,8 +149,8 @@ class _Page5PageState extends State<Page5Page>
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                                content:
-                                    Text(context.l10n.secondaryActionSnack),),
+                              content: Text(context.l10n.secondaryActionSnack),
+                            ),
                           );
                         },
                       ),

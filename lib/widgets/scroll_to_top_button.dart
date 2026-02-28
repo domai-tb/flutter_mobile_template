@@ -68,7 +68,9 @@ class ScrollToTopButtonState extends State<ScrollToTopButton> {
               backgroundColor: theme.cardColor,
               child: Icon(
                 Icons.arrow_upward,
-                color: isLight ? Colors.black : const Color.fromRGBO(184, 186, 191, 1),
+                color: isLight
+                    ? Colors.black
+                    : const Color.fromRGBO(184, 186, 191, 1),
               ),
             ),
           ),

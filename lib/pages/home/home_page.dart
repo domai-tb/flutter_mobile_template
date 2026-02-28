@@ -63,14 +63,16 @@ class HomePageState extends State<HomePage> {
     systemNavigationBarColor: Color.fromRGBO(17, 25, 38, 1), // Android
     systemNavigationBarIconBrightness: Brightness.light, // Android
   );
-  final SystemUiOverlayStyle lightTabletSystemUiStyle = const SystemUiOverlayStyle(
+  final SystemUiOverlayStyle lightTabletSystemUiStyle =
+      const SystemUiOverlayStyle(
     statusBarBrightness: Brightness.light, // iOS
     statusBarColor: Color.fromRGBO(245, 246, 250, 1), // Android
     statusBarIconBrightness: Brightness.dark, // Android
     systemNavigationBarColor: Color.fromRGBO(245, 246, 250, 1), // Android
     systemNavigationBarIconBrightness: Brightness.dark, // Android
   );
-  final SystemUiOverlayStyle darkTabletSystemUiStyle = const SystemUiOverlayStyle(
+  final SystemUiOverlayStyle darkTabletSystemUiStyle =
+      const SystemUiOverlayStyle(
     statusBarBrightness: Brightness.dark, // iOS
     statusBarColor: Color.fromRGBO(17, 25, 38, 1), // Android
     statusBarIconBrightness: Brightness.light, // Android
@@ -103,7 +105,8 @@ class HomePageState extends State<HomePage> {
     if (MediaQuery.of(context).size.shortestSide < 600) {
       // Get all pages as list and find the corresponding element
       final List<PageItem> pages = navigatorKeys.keys.toList();
-      final int indexNewPage = pages.indexWhere((element) => element == selectedPageItem);
+      final int indexNewPage =
+          pages.indexWhere((element) => element == selectedPageItem);
 
       // Switch to the selected page
       await pageController.animateToPage(
@@ -121,7 +124,9 @@ class HomePageState extends State<HomePage> {
       // Switch to the new page
       setState(() => currentPage = selectedPageItem);
       // Start the entry animation of the new page
-      await entryAnimationKeys[selectedPageItem]?.currentState?.startEntryAnimation();
+      await entryAnimationKeys[selectedPageItem]
+          ?.currentState
+          ?.startEntryAnimation();
     }
 
     // Enable swiping upon navigation
@@ -200,13 +205,17 @@ class HomePageState extends State<HomePage> {
                   child: Stack(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(bottom: Platform.isIOS ? 80 : 60),
+                        padding:
+                            EdgeInsets.only(bottom: Platform.isIOS ? 80 : 60),
                         child: PageView.builder(
-                          physics: swipeDisabled ? const NeverScrollableScrollPhysics() : const ScrollPhysics(),
+                          physics: swipeDisabled
+                              ? const NeverScrollableScrollPhysics()
+                              : const ScrollPhysics(),
                           controller: pageController,
                           itemCount: navigatorKeys.length,
                           onPageChanged: (page) {
-                            final List<PageItem> pages = navigatorKeys.keys.toList();
+                            final List<PageItem> pages =
+                                navigatorKeys.keys.toList();
 
                             // Find new PageItem and assign newPage the old value in case no element is found
                             final PageItem newPage = pages[page];
@@ -253,13 +262,17 @@ class HomePageState extends State<HomePage> {
               // Tablet layout
               : SafeArea(
                   child: Container(
-                    color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
+                    color: isLight
+                        ? const Color.fromRGBO(245, 246, 250, 1)
+                        : theme.cardColor,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
                           height: 20,
-                          color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
+                          color: isLight
+                              ? const Color.fromRGBO(245, 246, 250, 1)
+                              : theme.cardColor,
                         ),
                         Expanded(
                           child: Row(
@@ -278,15 +291,23 @@ class HomePageState extends State<HomePage> {
                                   ),
                                   child: Center(
                                     child: SizedBox(
-                                      width: currentPage != PageItem.page3 ? 550 : null,
+                                      width: currentPage != PageItem.page3
+                                          ? 550
+                                          : null,
                                       child: Stack(
                                         children: [
-                                          buildOffstateNavigator(PageItem.page1),
-                                          buildOffstateNavigator(PageItem.page2),
-                                          buildOffstateNavigator(PageItem.page3),
-                                          buildOffstateNavigator(PageItem.page4),
-                                          buildOffstateNavigator(PageItem.page5),
-                                          buildOffstateNavigator(PageItem.page6),
+                                          buildOffstateNavigator(
+                                              PageItem.page1),
+                                          buildOffstateNavigator(
+                                              PageItem.page2),
+                                          buildOffstateNavigator(
+                                              PageItem.page3),
+                                          buildOffstateNavigator(
+                                              PageItem.page4),
+                                          buildOffstateNavigator(
+                                              PageItem.page5),
+                                          buildOffstateNavigator(
+                                              PageItem.page6),
                                         ],
                                       ),
                                     ),
@@ -296,14 +317,18 @@ class HomePageState extends State<HomePage> {
                               // Detail space
                               Container(
                                 width: 20,
-                                color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
+                                color: isLight
+                                    ? const Color.fromRGBO(245, 246, 250, 1)
+                                    : theme.cardColor,
                               ),
                             ],
                           ),
                         ),
                         Container(
                           height: 20,
-                          color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
+                          color: isLight
+                              ? const Color.fromRGBO(245, 246, 250, 1)
+                              : theme.cardColor,
                         ),
                       ],
                     ),

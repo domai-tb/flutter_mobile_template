@@ -84,7 +84,6 @@ class RateLimitException implements Exception {
   const RateLimitException({this.message, this.retryAfter});
 
   @override
-  String toString() =>
-      'RateLimitException: ${message ?? 'Rate limit exceeded'}'
+  String toString() => 'RateLimitException: ${message ?? 'Rate limit exceeded'}'
       '${retryAfter != null ? ' (retry after: $retryAfter)' : ''}';
 }

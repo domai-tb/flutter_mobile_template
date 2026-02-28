@@ -25,7 +25,8 @@ class Page2Page extends StatefulWidget {
   State<Page2Page> createState() => _Page2PageState();
 }
 
-class _Page2PageState extends State<Page2Page> with AutomaticKeepAliveClientMixin<Page2Page> {
+class _Page2PageState extends State<Page2Page>
+    with AutomaticKeepAliveClientMixin<Page2Page> {
   final ScrollController _scrollController = ScrollController();
   late Page2Usecases _usecases;
   bool _wired = false;
@@ -34,7 +35,6 @@ class _Page2PageState extends State<Page2Page> with AutomaticKeepAliveClientMixi
 
   @override
   bool get wantKeepAlive => true;
-
 
   @override
   void dispose() {
@@ -79,7 +79,8 @@ class _Page2PageState extends State<Page2Page> with AutomaticKeepAliveClientMixi
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                  child: Text(context.l10n.page2Title, style: theme.textTheme.displayMedium),
+                  child: Text(context.l10n.page2Title,
+                      style: theme.textTheme.displayMedium),
                 ),
                 const SizedBox(height: 10),
                 Expanded(
@@ -89,12 +90,14 @@ class _Page2PageState extends State<Page2Page> with AutomaticKeepAliveClientMixi
                         onRefresh: _load,
                         child: ListView.builder(
                           controller: _scrollController,
-                          padding: EdgeInsets.only(bottom: Platform.isIOS ? 110 : 90, top: 10),
+                          padding: EdgeInsets.only(
+                              bottom: Platform.isIOS ? 110 : 90, top: 10),
                           itemCount: _loading ? 6 : _items.length,
                           itemBuilder: (context, index) {
                             if (_loading) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 8),
                                 child: Container(
                                   height: 86,
                                   decoration: BoxDecoration(
@@ -107,7 +110,8 @@ class _Page2PageState extends State<Page2Page> with AutomaticKeepAliveClientMixi
 
                             final item = _items[index];
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 8),
                               child: Container(
                                 padding: const EdgeInsets.all(14),
                                 decoration: BoxDecoration(
@@ -118,9 +122,12 @@ class _Page2PageState extends State<Page2Page> with AutomaticKeepAliveClientMixi
                                   children: [
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text(item.title, style: theme.textTheme.headlineSmall),
+                                          Text(item.title,
+                                              style: theme
+                                                  .textTheme.headlineSmall),
                                           const SizedBox(height: 6),
                                           Text(
                                             '${item.location} • ${item.startsAt.toLocal().toString().split('.').first}',

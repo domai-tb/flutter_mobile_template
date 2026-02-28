@@ -28,10 +28,10 @@ class HttpClient {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl ?? EnvironmentConfig.apiBaseUrl,
-        connectTimeout:
-            timeout ?? const Duration(milliseconds: EnvironmentConfig.apiTimeout),
-        receiveTimeout:
-            timeout ?? const Duration(milliseconds: EnvironmentConfig.apiTimeout),
+        connectTimeout: timeout ??
+            const Duration(milliseconds: EnvironmentConfig.apiTimeout),
+        receiveTimeout: timeout ??
+            const Duration(milliseconds: EnvironmentConfig.apiTimeout),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',

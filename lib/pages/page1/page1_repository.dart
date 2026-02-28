@@ -6,5 +6,6 @@ class Page1Repository {
 
   const Page1Repository({required this.dataSource});
 
-  Future<List<Page1ItemEntity>> listItems({String query = ''}) => dataSource.fetchItems(query: query);
+  Future<List<Page1ItemEntity>> listItems({String query = ''}) =>
+      dataSource.fetchItems(query: query);
 }

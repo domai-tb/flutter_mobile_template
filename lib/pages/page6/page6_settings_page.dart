@@ -33,8 +33,10 @@ class Page6SettingsPage extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              Text(context.l10n.themeLabel,
-                  style: theme.textTheme.headlineSmall,),
+              Text(
+                context.l10n.themeLabel,
+                style: theme.textTheme.headlineSmall,
+              ),
               const SizedBox(height: 10),
               AppSegmentedTripleControl(
                 leftTitle: 'System',
@@ -54,8 +56,10 @@ class Page6SettingsPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 24),
-              Text(context.l10n.languageLabel,
-                  style: theme.textTheme.headlineSmall,),
+              Text(
+                context.l10n.languageLabel,
+                style: theme.textTheme.headlineSmall,
+              ),
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 initialValue: settings.localeCode ?? 'system',
@@ -66,12 +70,17 @@ class Page6SettingsPage extends StatelessWidget {
                 ),
                 items: [
                   DropdownMenuItem(
-                      value: 'system',
-                      child: Text(context.l10n.languageSystem),),
+                    value: 'system',
+                    child: Text(context.l10n.languageSystem),
+                  ),
                   DropdownMenuItem(
-                      value: 'en', child: Text(context.l10n.languageEnglish),),
+                    value: 'en',
+                    child: Text(context.l10n.languageEnglish),
+                  ),
                   DropdownMenuItem(
-                      value: 'de', child: Text(context.l10n.languageGerman),),
+                    value: 'de',
+                    child: Text(context.l10n.languageGerman),
+                  ),
                 ],
                 onChanged: (val) {
                   if (val == null) return;
@@ -83,8 +92,10 @@ class Page6SettingsPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 24),
-              Text(context.l10n.accessibilityLabel,
-                  style: theme.textTheme.headlineSmall,),
+              Text(
+                context.l10n.accessibilityLabel,
+                style: theme.textTheme.headlineSmall,
+              ),
               const SizedBox(height: 10),
               SwitchListTile.adaptive(
                 contentPadding: EdgeInsets.zero,

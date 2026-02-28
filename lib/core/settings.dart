@@ -69,8 +69,11 @@ class Settings {
       useSystemDarkmode: useSystemDarkmode ?? this.useSystemDarkmode,
       useDarkmode: useDarkmode ?? this.useDarkmode,
       useSystemTextScaling: useSystemTextScaling ?? this.useSystemTextScaling,
-      didCompleteOnboarding: didCompleteOnboarding ?? this.didCompleteOnboarding,
-      localeCode: identical(localeCode, _noChange) ? this.localeCode : localeCode as String?,
+      didCompleteOnboarding:
+          didCompleteOnboarding ?? this.didCompleteOnboarding,
+      localeCode: identical(localeCode, _noChange)
+          ? this.localeCode
+          : localeCode as String?,
     );
   }
 
