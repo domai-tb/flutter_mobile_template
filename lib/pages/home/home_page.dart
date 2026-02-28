@@ -184,7 +184,7 @@ class HomePageState extends State<HomePage> {
           : (isLight ? lightTabletSystemUiStyle : darkTabletSystemUiStyle),
       child: PopScope(
         canPop: false,
-        onPopInvoked: (didPop) {
+        onPopInvokedWithResult: (didPop, _) {
           if (didPop) return;
           final nav = navigatorKeys[currentPage]?.currentState;
           if (nav == null) return;

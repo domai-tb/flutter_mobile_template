@@ -24,7 +24,10 @@ import 'package:mobile_app_skeleton/core/logger.dart';
 /// });
 /// ```
 class ConnectivityChecker {
-  final Connectivity _connectivity = Connectivity();
+  ConnectivityChecker({Connectivity? connectivity})
+      : _connectivity = connectivity ?? Connectivity();
+
+  final Connectivity _connectivity;
   StreamSubscription<List<ConnectivityResult>>? _subscription;
   final StreamController<bool> _connectivityController =
       StreamController<bool>.broadcast();

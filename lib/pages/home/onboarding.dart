@@ -95,7 +95,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(context.l10n.appTitle,
-                                style: theme.textTheme.displayMedium),
+                                style: theme.textTheme.displayMedium,),
                             const SizedBox(height: 10),
                             Text(
                               context.l10n.onboardingIntroBody,
@@ -115,10 +115,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(context.l10n.onboardingPreferencesTitle,
-                                style: theme.textTheme.displayMedium),
+                                style: theme.textTheme.displayMedium,),
                             const SizedBox(height: 20),
                             Text(context.l10n.themeLabel,
-                                style: theme.textTheme.headlineSmall),
+                                style: theme.textTheme.headlineSmall,),
                             const SizedBox(height: 10),
                             AppSegmentedTripleControl(
                               leftTitle: 'System',
@@ -132,7 +132,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             ),
                             const SizedBox(height: 24),
                             Text(context.l10n.accessibilityLabel,
-                                style: theme.textTheme.headlineSmall),
+                                style: theme.textTheme.headlineSmall,),
                             const SizedBox(height: 10),
                             SwitchListTile.adaptive(
                               contentPadding: EdgeInsets.zero,
@@ -176,7 +176,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         },
                         child: Text(_pageIndex == 0
                             ? context.l10n.next
-                            : context.l10n.finish),
+                            : context.l10n.finish,),
                       ),
                     ],
                   ),

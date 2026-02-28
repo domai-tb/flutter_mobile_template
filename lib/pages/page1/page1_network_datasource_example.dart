@@ -80,7 +80,7 @@ class Page1NetworkDataSource {
     } catch (e, stackTrace) {
       // Wrap unexpected errors
       AppLogger.e('Failed to fetch items', error: e, stackTrace: stackTrace);
-      throw ParseException(
+      throw const ParseException(
         message: 'Failed to parse items from server response',
       );
     }

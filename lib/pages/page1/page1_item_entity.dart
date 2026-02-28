@@ -17,7 +17,5 @@ class Page1ItemEntity with _$Page1ItemEntity {
   }) = _Page1ItemEntity;
 
   /// Create instance from JSON.
-  factory Page1ItemEntity.fromJson(Map<String, dynamic> json) =>
-      _$Page1ItemEntityFromJson(json);
+  factory Page1ItemEntity.fromJson(Map<String, dynamic> json) => _$Page1ItemEntityFromJson(json);
 }
-

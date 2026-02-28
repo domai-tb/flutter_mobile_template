@@ -17,11 +17,6 @@ class AppLogger {
   static Logger get instance {
     _instance ??= Logger(
       printer: PrettyPrinter(
-        methodCount: 2, // Number of method calls to be displayed
-        errorMethodCount: 8, // Number of method calls for errors
-        lineLength: 120, // Width of the output
-        colors: true, // Colorful log messages
-        printEmojis: true, // Print emoji for each log level
         dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
       ),
       level: _getLogLevel(),

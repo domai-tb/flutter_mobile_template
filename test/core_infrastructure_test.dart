@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -8,7 +11,11 @@ import 'package:mobile_app_skeleton/core/logger.dart';
 /// Mock classes for testing.
 class MockHttpClient extends Mock implements HttpClient {}
 
+class MockConnectivity extends Mock implements Connectivity {}
+
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('Core Infrastructure Tests', () {
     group('AppLogger', () {
       test('logger instance is singleton', () {
@@ -31,30 +38,40 @@ void main() {
 
     group('ConnectivityChecker', () {
       late ConnectivityChecker checker;
+      late MockConnectivity mockConnectivity;
+      late StreamController<List<ConnectivityResult>> connectivityController;
 
       setUp(() {
-        checker = ConnectivityChecker();
+        mockConnectivity = MockConnectivity();
+        connectivityController =
+            StreamController<List<ConnectivityResult>>.broadcast();
+
+        when(() => mockConnectivity.checkConnectivity()).thenAnswer(
+          (_) async => [ConnectivityResult.wifi],
+        );
+        when(() => mockConnectivity.onConnectivityChanged)
+            .thenAnswer((_) => connectivityController.stream);
+
+        checker = ConnectivityChecker(connectivity: mockConnectivity);
       });
 
-      tearDown(() {
+      tearDown(() async {
         checker.dispose();
+        await connectivityController.close();
       });
 
       test('can check connection status', () async {
         final hasConnection = await checker.hasConnection;
         expect(hasConnection, isA<bool>());
+        expect(hasConnection, isTrue);
       });
 
       test('connectivity stream emits bool values', () async {
         checker.startMonitoring();
 
-        expectLater(
-          checker.onConnectivityChanged,
-          emitsInAnyOrder([isA<bool>()]),
-        );
-
-        // Allow some time for the stream to emit
-        await Future.delayed(const Duration(milliseconds: 100));
+        final event = checker.onConnectivityChanged.first;
+        connectivityController.add([ConnectivityResult.mobile]);
+        expect(await event, isTrue);
         checker.stopMonitoring();
       });
 

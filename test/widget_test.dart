@@ -13,7 +13,7 @@ void main() {
           MaterialApp(
             home: Scaffold(
               body: AppButton(
-                label: 'Test Button',
+                text: 'Test Button',
                 onTap: () {},
               ),
             ),
@@ -30,7 +30,7 @@ void main() {
           MaterialApp(
             home: Scaffold(
               body: AppButton(
-                label: 'Test Button',
+                text: 'Test Button',
                 onTap: () => tapped = true,
               ),
             ),
@@ -43,20 +43,19 @@ void main() {
         expect(tapped, isTrue);
       });
 
-      testWidgets('respects loading state', (tester) async {
+      testWidgets('renders light variant', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
+          MaterialApp(
             home: Scaffold(
-              body: AppButton(
-                label: 'Test Button',
-                onTap: null,
-                loading: true,
+              body: AppButton.light(
+                text: 'Light Button',
+                onTap: _noop,
               ),
             ),
           ),
         );
 
-        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        expect(find.text('Light Button'), findsOneWidget);
       });
     });
 
@@ -98,3 +97,5 @@ void main() {
     });
   });
 }
+
+void _noop() {}

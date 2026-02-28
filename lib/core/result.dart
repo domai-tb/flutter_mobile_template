@@ -37,10 +37,10 @@ extension ResultX<T> on Result<T> {
   bool get isFailure => isLeft();
 
   /// Get the success value or null if this is a failure.
-  T? get valueOrNull => getOrElse(() => null as T);
+  T? get valueOrNull => fold((_) => null, (value) => value);
 
   /// Get the failure or null if this is a success.
-  Failure? get failureOrNull => swap().getOrElse(() => null as Failure);
+  Failure? get failureOrNull => fold((failure) => failure, (_) => null);
 }
 
 /// Helper functions to create Result instances.
@@ -62,8 +62,7 @@ class Results {
     try {
       return Right(fn());
     } catch (e, stack) {
-      final failure =
-          onError?.call(e, stack) ?? GeneralFailure();
+      final failure = onError?.call(e, stack) ?? GeneralFailure();
       return Left(failure);
     }
   }
@@ -77,8 +76,7 @@ class Results {
       final value = await fn();
       return Right(value);
     } catch (e, stack) {
-      final failure =
-          onError?.call(e, stack) ?? GeneralFailure();
+      final failure = onError?.call(e, stack) ?? GeneralFailure();
       return Left(failure);
     }
   }

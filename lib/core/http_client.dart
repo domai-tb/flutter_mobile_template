@@ -28,10 +28,10 @@ class HttpClient {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl ?? EnvironmentConfig.apiBaseUrl,
-        connectTimeout: timeout ??
-            Duration(milliseconds: EnvironmentConfig.apiTimeout),
-        receiveTimeout: timeout ??
-            Duration(milliseconds: EnvironmentConfig.apiTimeout),
+        connectTimeout:
+            timeout ?? const Duration(milliseconds: EnvironmentConfig.apiTimeout),
+        receiveTimeout:
+            timeout ?? const Duration(milliseconds: EnvironmentConfig.apiTimeout),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -205,7 +205,7 @@ class HttpClient {
       case DioExceptionType.badResponse:
         final statusCode = error.response?.statusCode;
         if (statusCode == 401 || statusCode == 403) {
-          return AuthenticationException(
+          return const AuthenticationException(
             message: 'Authentication failed. Please log in again.',
           );
         } else if (statusCode == 429) {
@@ -237,7 +237,6 @@ class HttpClient {
         );
 
       case DioExceptionType.unknown:
-      default:
         return UnexpectedException(
           message: 'An unexpected error occurred',
           originalError: error,

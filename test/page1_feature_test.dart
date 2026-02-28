@@ -71,7 +71,7 @@ void main() {
         when(() => mockDataSource.fetchItems(query: any(named: 'query')))
             .thenAnswer((_) async => testItems);
 
-        final result = await repository.getItems();
+        final result = await repository.listItems();
 
         expect(result, equals(testItems));
         verify(() => mockDataSource.fetchItems(query: any(named: 'query')))
