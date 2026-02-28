@@ -55,11 +55,33 @@ jobs:
       - name: Run tests
         run: flutter test --coverage
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+      - name: Publish coverage summary
+        shell: bash
+        run: |
+          if [ ! -f coverage/lcov.info ]; then
+            echo "coverage/lcov.info not found" >&2
+            exit 1
+          fi
+
+          total="$(awk -F: '/^LF:/{sum+=$2} END{print sum+0}' coverage/lcov.info)"
+          hit="$(awk -F: '/^LH:/{sum+=$2} END{print sum+0}' coverage/lcov.info)"
+          percent="$(awk "BEGIN { if ($total==0) print \"0.00\"; else printf \"%.2f\", ($hit/$total)*100 }")"
+
+          {
+            echo "## Flutter Coverage"
+            echo ""
+            echo "| Metric | Value |"
+            echo "| --- | --- |"
+            echo "| Covered lines | $hit |"
+            echo "| Total lines | $total |"
+            echo "| Coverage | ${percent}% |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
         with:
-          file: ./coverage/lcov.info
-          fail_ci_if_error: false
+          name: flutter-coverage-lcov
+          path: coverage/lcov.info
 
   build-android:
     name: Build Android

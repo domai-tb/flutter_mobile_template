@@ -8,11 +8,19 @@ part of 'page1_item_entity.dart';
 
 _$Page1ItemEntityImpl _$$Page1ItemEntityImplFromJson(
         Map<String, dynamic> json) =>
-    _$Page1ItemEntityImpl(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      subtitle: json['subtitle'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
+    $checkedCreate(
+      r'_$Page1ItemEntityImpl',
+      json,
+      ($checkedConvert) {
+        final val = _$Page1ItemEntityImpl(
+          id: $checkedConvert('id', (v) => v as String),
+          title: $checkedConvert('title', (v) => v as String),
+          subtitle: $checkedConvert('subtitle', (v) => v as String),
+          createdAt:
+              $checkedConvert('createdAt', (v) => DateTime.parse(v as String)),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$$Page1ItemEntityImplToJson(
