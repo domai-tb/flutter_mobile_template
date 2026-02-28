@@ -58,7 +58,10 @@ class _SideNavBarItemState extends State<SideNavBarItem> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                    left: 14, right: 14, bottom: widget.bottomIconPadding),
+                  left: 14,
+                  right: 14,
+                  bottom: widget.bottomIconPadding,
+                ),
                 child: Icon(
                   widget.isActive ? widget.activeIcon : widget.inactiveIcon,
                   size: widget.iconHeight,

@@ -56,7 +56,9 @@ class _BottomNavBarItemState extends State<BottomNavBarItem> {
 
     return Padding(
       padding: EdgeInsets.only(
-          left: widget.iconPaddingLeft, right: widget.iconPaddingRight),
+        left: widget.iconPaddingLeft,
+        right: widget.iconPaddingRight,
+      ),
       child: AnimatedPadding(
         padding: widget.isActive
             ? const EdgeInsets.only(top: 2)

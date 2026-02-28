@@ -79,8 +79,10 @@ class _Page4PageState extends State<Page4Page>
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                  child: Text(context.l10n.page4Title,
-                      style: theme.textTheme.displayMedium),
+                  child: Text(
+                    context.l10n.page4Title,
+                    style: theme.textTheme.displayMedium,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Expanded(
@@ -91,13 +93,17 @@ class _Page4PageState extends State<Page4Page>
                         child: ListView.builder(
                           controller: _scrollController,
                           padding: EdgeInsets.only(
-                              bottom: Platform.isIOS ? 110 : 90, top: 10),
+                            bottom: Platform.isIOS ? 110 : 90,
+                            top: 10,
+                          ),
                           itemCount: _loading ? 4 : _items.length,
                           itemBuilder: (context, index) {
                             if (_loading) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 8),
+                                  horizontal: 20,
+                                  vertical: 8,
+                                ),
                                 child: Container(
                                   height: 92,
                                   decoration: BoxDecoration(
@@ -111,7 +117,9 @@ class _Page4PageState extends State<Page4Page>
                             final item = _items[index];
                             return Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 8),
+                                horizontal: 20,
+                                vertical: 8,
+                              ),
                               child: Container(
                                 padding: const EdgeInsets.all(14),
                                 decoration: BoxDecoration(
@@ -125,13 +133,16 @@ class _Page4PageState extends State<Page4Page>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(item.title,
-                                              style: theme
-                                                  .textTheme.headlineSmall),
+                                          Text(
+                                            item.title,
+                                            style:
+                                                theme.textTheme.headlineSmall,
+                                          ),
                                           const SizedBox(height: 6),
-                                          Text(item.description,
-                                              style:
-                                                  theme.textTheme.bodyMedium),
+                                          Text(
+                                            item.description,
+                                            style: theme.textTheme.bodyMedium,
+                                          ),
                                         ],
                                       ),
                                     ),

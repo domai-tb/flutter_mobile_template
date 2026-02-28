@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v dart >/dev/null 2>&1; then
+  echo "pre-commit: dart command not found in PATH."
+  exit 1
+fi
+
+mapfile -d '' staged_dart_files < <(git diff --cached --name-only --diff-filter=ACMR -z -- '*.dart')
+
+if [ ${#staged_dart_files[@]} -eq 0 ]; then
+  exit 0
+fi
+
+dart_files=()
+for file in "${staged_dart_files[@]}"; do
+  if [ -f "$file" ]; then
+    dart_files+=("$file")
+  fi
+done
+
+if [ ${#dart_files[@]} -eq 0 ]; then
+  exit 0
+fi
+
+fix_targets=()
+for file in "${dart_files[@]}"; do
+  case "$file" in
+    *.g.dart|*.freezed.dart|*.mocks.dart|*.gen.dart)
+      ;;
+    *)
+      fix_targets+=("$file")
+      ;;
+  esac
+done
+
+if [ ${#fix_targets[@]} -gt 0 ]; then
+  echo "pre-commit: stabilizing staged Dart files with dart fix + dart format..."
+  stable=0
+
+  for pass in 1 2; do
+    for file in "${fix_targets[@]}"; do
+      dart fix --apply "$file"
+    done
+    dart format "${dart_files[@]}"
+
+    has_pending_fixes=0
+    for file in "${fix_targets[@]}"; do
+      dry_run_output="$(dart fix --dry-run "$file")"
+      if ! grep -Eq "Nothing to fix!|No fixes to apply\\." <<<"$dry_run_output"; then
+        has_pending_fixes=1
+        break
+      fi
+    done
+
+    if [ "$has_pending_fixes" -eq 0 ]; then
+      stable=1
+      break
+    fi
+  done
+
+  if [ "$stable" -ne 1 ]; then
+    echo "pre-commit: could not reach a stable dart fix/format state after 2 passes."
+    echo "pre-commit: please run 'dart fix --apply .' then 'dart format .' and recommit."
+    exit 1
+  fi
+else
+  echo "pre-commit: running dart format on staged Dart files..."
+  dart format "${dart_files[@]}"
+fi
+
+git add "${dart_files[@]}"

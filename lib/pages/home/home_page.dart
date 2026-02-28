@@ -297,17 +297,23 @@ class HomePageState extends State<HomePage> {
                                       child: Stack(
                                         children: [
                                           buildOffstateNavigator(
-                                              PageItem.page1),
+                                            PageItem.page1,
+                                          ),
                                           buildOffstateNavigator(
-                                              PageItem.page2),
+                                            PageItem.page2,
+                                          ),
                                           buildOffstateNavigator(
-                                              PageItem.page3),
+                                            PageItem.page3,
+                                          ),
                                           buildOffstateNavigator(
-                                              PageItem.page4),
+                                            PageItem.page4,
+                                          ),
                                           buildOffstateNavigator(
-                                              PageItem.page5),
+                                            PageItem.page5,
+                                          ),
                                           buildOffstateNavigator(
-                                              PageItem.page6),
+                                            PageItem.page6,
+                                          ),
                                         ],
                                       ),
                                     ),

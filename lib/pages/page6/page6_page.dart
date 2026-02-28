@@ -118,8 +118,10 @@ class _Page6PageState extends State<Page6Page>
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                  child: Text(context.l10n.page6Title,
-                      style: theme.textTheme.displayMedium),
+                  child: Text(
+                    context.l10n.page6Title,
+                    style: theme.textTheme.displayMedium,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Expanded(
@@ -130,13 +132,17 @@ class _Page6PageState extends State<Page6Page>
                         child: ListView.builder(
                           controller: _scrollController,
                           padding: EdgeInsets.only(
-                              bottom: Platform.isIOS ? 110 : 90, top: 10),
+                            bottom: Platform.isIOS ? 110 : 90,
+                            top: 10,
+                          ),
                           itemCount: _loading ? 2 : _items.length,
                           itemBuilder: (context, index) {
                             if (_loading) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 8),
+                                  horizontal: 20,
+                                  vertical: 8,
+                                ),
                                 child: Container(
                                   height: 72,
                                   decoration: BoxDecoration(
@@ -150,7 +156,9 @@ class _Page6PageState extends State<Page6Page>
                             final item = _items[index];
                             return Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 8),
+                                horizontal: 20,
+                                vertical: 8,
+                              ),
                               child: Material(
                                 color: theme.cardColor,
                                 borderRadius: BorderRadius.circular(16),
@@ -166,13 +174,17 @@ class _Page6PageState extends State<Page6Page>
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(itemTitle(item),
-                                                  style: theme
-                                                      .textTheme.headlineSmall),
+                                              Text(
+                                                itemTitle(item),
+                                                style: theme
+                                                    .textTheme.headlineSmall,
+                                              ),
                                               const SizedBox(height: 6),
-                                              Text(itemSubtitle(item),
-                                                  style: theme
-                                                      .textTheme.bodyMedium),
+                                              Text(
+                                                itemSubtitle(item),
+                                                style:
+                                                    theme.textTheme.bodyMedium,
+                                              ),
                                             ],
                                           ),
                                         ),

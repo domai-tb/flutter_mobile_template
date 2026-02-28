@@ -77,8 +77,10 @@ class _Page3PageState extends State<Page3Page>
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                  child: Text(context.l10n.page3Title,
-                      style: theme.textTheme.displayMedium),
+                  child: Text(
+                    context.l10n.page3Title,
+                    style: theme.textTheme.displayMedium,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Expanded(
@@ -89,13 +91,17 @@ class _Page3PageState extends State<Page3Page>
                         child: ListView.builder(
                           controller: _scrollController,
                           padding: EdgeInsets.only(
-                              bottom: Platform.isIOS ? 110 : 90, top: 10),
+                            bottom: Platform.isIOS ? 110 : 90,
+                            top: 10,
+                          ),
                           itemCount: _loading ? 3 : _items.length,
                           itemBuilder: (context, index) {
                             if (_loading) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 8),
+                                  horizontal: 20,
+                                  vertical: 8,
+                                ),
                                 child: Container(
                                   height: 78,
                                   decoration: BoxDecoration(
@@ -109,7 +115,9 @@ class _Page3PageState extends State<Page3Page>
                             final item = _items[index];
                             return Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 8),
+                                horizontal: 20,
+                                vertical: 8,
+                              ),
                               child: Container(
                                 padding: const EdgeInsets.all(14),
                                 decoration: BoxDecoration(
@@ -119,11 +127,15 @@ class _Page3PageState extends State<Page3Page>
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(item.label,
-                                        style: theme.textTheme.headlineSmall),
+                                    Text(
+                                      item.label,
+                                      style: theme.textTheme.headlineSmall,
+                                    ),
                                     const SizedBox(height: 6),
-                                    Text(item.description,
-                                        style: theme.textTheme.bodyMedium),
+                                    Text(
+                                      item.description,
+                                      style: theme.textTheme.bodyMedium,
+                                    ),
                                   ],
                                 ),
                               ),

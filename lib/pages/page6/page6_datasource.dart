@@ -5,9 +5,15 @@ class Page6DataSource {
     await Future<void>.delayed(const Duration(milliseconds: 150));
     return const [
       Page6ItemEntity(
-          id: 'settings', title: 'Settings', subtitle: 'Template app settings'),
+        id: 'settings',
+        title: 'Settings',
+        subtitle: 'Template app settings',
+      ),
       Page6ItemEntity(
-          id: 'about', title: 'About', subtitle: 'About this template'),
+        id: 'about',
+        title: 'About',
+        subtitle: 'About this template',
+      ),
     ];
   }
 }

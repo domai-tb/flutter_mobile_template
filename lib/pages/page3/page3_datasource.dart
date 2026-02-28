@@ -6,17 +6,20 @@ class Page3DataSource {
 
     return const [
       Page3ItemEntity(
-          id: 'p3_1',
-          label: 'Placeholder A',
-          description: 'Replace with your navigation/map feature.'),
+        id: 'p3_1',
+        label: 'Placeholder A',
+        description: 'Replace with your navigation/map feature.',
+      ),
       Page3ItemEntity(
-          id: 'p3_2',
-          label: 'Placeholder B',
-          description: 'This tab is intentionally generic.'),
+        id: 'p3_2',
+        label: 'Placeholder B',
+        description: 'This tab is intentionally generic.',
+      ),
       Page3ItemEntity(
-          id: 'p3_3',
-          label: 'Placeholder C',
-          description: 'Keep the architecture; swap the details.'),
+        id: 'p3_3',
+        label: 'Placeholder C',
+        description: 'Keep the architecture; swap the details.',
+      ),
     ];
   }
 }

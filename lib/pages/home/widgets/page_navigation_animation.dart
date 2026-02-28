@@ -151,8 +151,9 @@ class AnimatedExitState extends State<AnimatedExit>
     await _animationController.reverse();
 
     // Optional delay
-    if (widget.delayAfterAnimation != Duration.zero)
+    if (widget.delayAfterAnimation != Duration.zero) {
       await Future.delayed(widget.delayAfterAnimation);
+    }
 
     return true;
   }
