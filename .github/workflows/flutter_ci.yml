@@ -2,9 +2,9 @@ name: Flutter CI
 
 on:
   push:
-    branches: [ main, develop, skeleton ]
+    branches: [main, develop, skeleton]
   pull_request:
-    branches: [ main, develop, skeleton ]
+    branches: [main, develop, skeleton]
 
 jobs:
   analyze:
@@ -16,8 +16,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.x'
-          channel: 'stable'
+          flutter-version: "3.38.x"
+          channel: "stable"
           cache: true
 
       - name: Install dependencies
@@ -39,8 +39,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.x'
-          channel: 'stable'
+          flutter-version: "3.38.x"
+          channel: "stable"
           cache: true
 
       - name: Install dependencies
@@ -68,15 +68,15 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.x'
-          channel: 'stable'
+          flutter-version: "3.38.x"
+          channel: "stable"
           cache: true
 
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: '17'
+          distribution: "zulu"
+          java-version: "17"
 
       - name: Install dependencies
         run: flutter pub get
@@ -103,8 +103,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.x'
-          channel: 'stable'
+          flutter-version: "3.38.x"
+          channel: "stable"
           cache: true
 
       - name: Install dependencies
