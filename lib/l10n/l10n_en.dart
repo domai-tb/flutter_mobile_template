@@ -86,6 +86,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get useSystemTextScaling => 'Use system text scaling';
 
   @override
+  String get navigationLabel => 'Navigation';
+
+  @override
+  String get navigationOrderHint => 'Drag to reorder menu items.';
+
+  @override
+  String get navigationVisibilityLabel => 'Show in navigation';
+
+  @override
+  String get navigationSettingsAlwaysVisibleHint =>
+      'Page 6 stays visible so settings remain reachable.';
+
+  @override
   String get walletPlaceholderBody => 'Placeholder for a wallet-style feature.';
 
   @override

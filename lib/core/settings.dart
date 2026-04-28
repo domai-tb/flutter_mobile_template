@@ -43,12 +43,22 @@ class SettingsController with ChangeNotifier {
 
 class Settings {
   static const Object _noChange = Object();
+  static const List<String> _defaultNavBarOrder = [
+    'page1',
+    'page2',
+    'page3',
+    'page4',
+    'page5',
+    'page6',
+  ];
 
   final bool useSystemDarkmode;
   final bool useDarkmode;
   final bool useSystemTextScaling;
   final bool didCompleteOnboarding;
   final String? localeCode;
+  final List<String> navBarItemOrder;
+  final List<String> hiddenNavBarItems;
 
   const Settings({
     this.useSystemDarkmode = true,
@@ -56,6 +66,8 @@ class Settings {
     this.useSystemTextScaling = false,
     this.didCompleteOnboarding = false,
     this.localeCode,
+    this.navBarItemOrder = _defaultNavBarOrder,
+    this.hiddenNavBarItems = const [],
   });
 
   Settings copyWith({
@@ -64,13 +76,20 @@ class Settings {
     bool? useSystemTextScaling,
     bool? didCompleteOnboarding,
     Object? localeCode = _noChange,
+    List<String>? navBarItemOrder,
+    List<String>? hiddenNavBarItems,
   }) {
     return Settings(
       useSystemDarkmode: useSystemDarkmode ?? this.useSystemDarkmode,
       useDarkmode: useDarkmode ?? this.useDarkmode,
       useSystemTextScaling: useSystemTextScaling ?? this.useSystemTextScaling,
-      didCompleteOnboarding: didCompleteOnboarding ?? this.didCompleteOnboarding,
-      localeCode: identical(localeCode, _noChange) ? this.localeCode : localeCode as String?,
+      didCompleteOnboarding:
+          didCompleteOnboarding ?? this.didCompleteOnboarding,
+      localeCode: identical(localeCode, _noChange)
+          ? this.localeCode
+          : localeCode as String?,
+      navBarItemOrder: navBarItemOrder ?? this.navBarItemOrder,
+      hiddenNavBarItems: hiddenNavBarItems ?? this.hiddenNavBarItems,
     );
   }
 
@@ -81,6 +100,15 @@ class Settings {
       useSystemTextScaling: json['useSystemTextScaling'] ?? false,
       didCompleteOnboarding: json['didCompleteOnboarding'] ?? false,
       localeCode: json['localeCode'],
+      navBarItemOrder: (json['navBarItemOrder'] as List<dynamic>?)
+              ?.whereType<String>()
+              .toList() ??
+          _defaultNavBarOrder,
+      hiddenNavBarItems: (json['hiddenNavBarItems'] as List<dynamic>?)
+              ?.whereType<String>()
+              .where((item) => item != 'page6')
+              .toList() ??
+          const [],
     );
   }
 
@@ -91,6 +119,9 @@ class Settings {
       'useSystemTextScaling': useSystemTextScaling,
       'didCompleteOnboarding': didCompleteOnboarding,
       'localeCode': localeCode,
+      'navBarItemOrder': navBarItemOrder,
+      'hiddenNavBarItems':
+          hiddenNavBarItems.where((item) => item != 'page6').toList(),
     };
   }
 }

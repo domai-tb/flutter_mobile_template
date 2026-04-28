@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:mobile_app_skeleton/l10n/l10n_x.dart';
 import 'package:mobile_app_skeleton/pages/home/widgets/page_navigation_animation.dart';
 import 'package:mobile_app_skeleton/pages/page1/page1_page.dart';
 import 'package:mobile_app_skeleton/pages/page2/page2_page.dart';
@@ -9,6 +10,111 @@ import 'package:mobile_app_skeleton/pages/page5/page5_page.dart';
 import 'package:mobile_app_skeleton/pages/page6/page6_page.dart';
 
 enum PageItem { page1, page2, page3, page4, page5, page6 }
+
+PageItem? pageItemFromId(String id) {
+  for (final item in PageItem.values) {
+    if (item.name == id) return item;
+  }
+  return null;
+}
+
+List<PageItem> orderedPageItemsFromSettings(List<String> order) {
+  final orderedItems = <PageItem>[];
+  final seenItems = <PageItem>{};
+
+  for (final id in order) {
+    final item = pageItemFromId(id);
+    if (item != null && seenItems.add(item)) {
+      orderedItems.add(item);
+    }
+  }
+
+  for (final item in PageItem.values) {
+    if (seenItems.add(item)) {
+      orderedItems.add(item);
+    }
+  }
+
+  return orderedItems;
+}
+
+Set<PageItem> hiddenPageItemsFromSettings(List<String> hiddenItems) {
+  final hiddenPageItems = <PageItem>{};
+
+  for (final id in hiddenItems) {
+    final item = pageItemFromId(id);
+    if (item != null && item != PageItem.page6) {
+      hiddenPageItems.add(item);
+    }
+  }
+
+  return hiddenPageItems;
+}
+
+List<String> pageItemIds(Iterable<PageItem> items) {
+  return items.map((item) => item.name).toList();
+}
+
+class PageItemPresentation {
+  final String title;
+  final IconData activeIcon;
+  final IconData inactiveIcon;
+  final double iconPaddingLeft;
+  final double iconPaddingRight;
+
+  const PageItemPresentation({
+    required this.title,
+    required this.activeIcon,
+    required this.inactiveIcon,
+    this.iconPaddingLeft = 10,
+    this.iconPaddingRight = 10,
+  });
+}
+
+PageItemPresentation pageItemPresentation(BuildContext context, PageItem item) {
+  switch (item) {
+    case PageItem.page1:
+      return PageItemPresentation(
+        title: context.l10n.page1Title,
+        activeIcon: Icons.home,
+        inactiveIcon: Icons.home_outlined,
+        iconPaddingLeft: 0,
+      );
+    case PageItem.page2:
+      return PageItemPresentation(
+        title: context.l10n.page2Title,
+        activeIcon: Icons.calendar_month,
+        inactiveIcon: Icons.calendar_month_outlined,
+        iconPaddingLeft: 14,
+      );
+    case PageItem.page3:
+      return PageItemPresentation(
+        title: context.l10n.page3Title,
+        activeIcon: Icons.map,
+        inactiveIcon: Icons.map_outlined,
+      );
+    case PageItem.page4:
+      return PageItemPresentation(
+        title: context.l10n.page4Title,
+        activeIcon: Icons.restaurant,
+        inactiveIcon: Icons.restaurant_outlined,
+      );
+    case PageItem.page5:
+      return PageItemPresentation(
+        title: context.l10n.page5Title,
+        activeIcon: Icons.account_balance_wallet,
+        inactiveIcon: Icons.account_balance_wallet_outlined,
+      );
+    case PageItem.page6:
+      return PageItemPresentation(
+        title: context.l10n.page6Title,
+        activeIcon: Icons.more_horiz,
+        inactiveIcon: Icons.more_horiz,
+        iconPaddingLeft: 5,
+        iconPaddingRight: 0,
+      );
+  }
+}
 
 class PageNavigatorRoutes {
   /// The root-page is shown initially when this navbar-tab is the active one.

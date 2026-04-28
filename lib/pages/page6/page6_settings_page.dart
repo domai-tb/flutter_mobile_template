@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:mobile_app_skeleton/core/app_scope.dart';
-import 'package:mobile_app_skeleton/widgets/app_segmented_triple_control.dart';
 import 'package:mobile_app_skeleton/l10n/l10n_x.dart';
+import 'package:mobile_app_skeleton/pages/home/page_navigator.dart';
+import 'package:mobile_app_skeleton/pages/home/widgets/nav_bar_preferences_editor.dart';
+import 'package:mobile_app_skeleton/widgets/app_segmented_triple_control.dart';
 
 class Page6SettingsPage extends StatelessWidget {
   const Page6SettingsPage({super.key});
@@ -22,6 +24,10 @@ class Page6SettingsPage extends StatelessWidget {
         animation: settingsController,
         builder: (context, _) {
           final settings = settingsController.settings;
+          final orderedItems =
+              orderedPageItemsFromSettings(settings.navBarItemOrder);
+          final hiddenItems =
+              hiddenPageItemsFromSettings(settings.hiddenNavBarItems);
 
           // 0 = system, 1 = light, 2 = dark
           final initialSelection = settings.useSystemDarkmode
@@ -33,8 +39,10 @@ class Page6SettingsPage extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              Text(context.l10n.themeLabel,
-                  style: theme.textTheme.headlineSmall),
+              Text(
+                context.l10n.themeLabel,
+                style: theme.textTheme.headlineSmall,
+              ),
               const SizedBox(height: 10),
               AppSegmentedTripleControl(
                 leftTitle: 'System',
@@ -54,11 +62,13 @@ class Page6SettingsPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 24),
-              Text(context.l10n.languageLabel,
-                  style: theme.textTheme.headlineSmall),
+              Text(
+                context.l10n.languageLabel,
+                style: theme.textTheme.headlineSmall,
+              ),
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(
-                value: settings.localeCode ?? 'system',
+                initialValue: settings.localeCode ?? 'system',
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   contentPadding:
@@ -66,12 +76,17 @@ class Page6SettingsPage extends StatelessWidget {
                 ),
                 items: [
                   DropdownMenuItem(
-                      value: 'system',
-                      child: Text(context.l10n.languageSystem)),
+                    value: 'system',
+                    child: Text(context.l10n.languageSystem),
+                  ),
                   DropdownMenuItem(
-                      value: 'en', child: Text(context.l10n.languageEnglish)),
+                    value: 'en',
+                    child: Text(context.l10n.languageEnglish),
+                  ),
                   DropdownMenuItem(
-                      value: 'de', child: Text(context.l10n.languageGerman)),
+                    value: 'de',
+                    child: Text(context.l10n.languageGerman),
+                  ),
                 ],
                 onChanged: (val) {
                   if (val == null) return;
@@ -83,8 +98,10 @@ class Page6SettingsPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 24),
-              Text(context.l10n.accessibilityLabel,
-                  style: theme.textTheme.headlineSmall),
+              Text(
+                context.l10n.accessibilityLabel,
+                style: theme.textTheme.headlineSmall,
+              ),
               const SizedBox(height: 10),
               SwitchListTile.adaptive(
                 contentPadding: EdgeInsets.zero,
@@ -93,6 +110,21 @@ class Page6SettingsPage extends StatelessWidget {
                 onChanged: (val) {
                   settingsController
                       .update(settings.copyWith(useSystemTextScaling: val));
+                },
+              ),
+              const SizedBox(height: 24),
+              NavBarPreferencesEditor(
+                orderedItems: orderedItems,
+                hiddenItems: hiddenItems,
+                onOrderChanged: (items) {
+                  settingsController.update(
+                    settings.copyWith(navBarItemOrder: pageItemIds(items)),
+                  );
+                },
+                onHiddenItemsChanged: (items) {
+                  settingsController.update(
+                    settings.copyWith(hiddenNavBarItems: pageItemIds(items)),
+                  );
                 },
               ),
             ],

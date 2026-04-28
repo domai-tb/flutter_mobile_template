@@ -32,6 +32,10 @@
   "languageGerman": "German",
   "accessibilityLabel": "Accessibility",
   "useSystemTextScaling": "Use system text scaling",
+  "navigationLabel": "Navigation",
+  "navigationOrderHint": "Drag to reorder menu items.",
+  "navigationVisibilityLabel": "Show in navigation",
+  "navigationSettingsAlwaysVisibleHint": "Page 6 stays visible so settings remain reachable.",
 
   "walletPlaceholderBody": "Placeholder for a wallet-style feature.",
   "primaryAction": "Primary Action",

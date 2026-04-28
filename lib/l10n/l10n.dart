@@ -248,6 +248,30 @@ abstract class AppLocalizations {
   /// **'Use system text scaling'**
   String get useSystemTextScaling;
 
+  /// No description provided for @navigationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation'**
+  String get navigationLabel;
+
+  /// No description provided for @navigationOrderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to reorder menu items.'**
+  String get navigationOrderHint;
+
+  /// No description provided for @navigationVisibilityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Show in navigation'**
+  String get navigationVisibilityLabel;
+
+  /// No description provided for @navigationSettingsAlwaysVisibleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Page 6 stays visible so settings remain reachable.'**
+  String get navigationSettingsAlwaysVisibleHint;
+
   /// No description provided for @walletPlaceholderBody.
   ///
   /// In en, this message translates to:

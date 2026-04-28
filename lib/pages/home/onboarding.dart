@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:mobile_app_skeleton/core/app_scope.dart';
-import 'package:mobile_app_skeleton/widgets/app_segmented_triple_control.dart';
 import 'package:mobile_app_skeleton/l10n/l10n_x.dart';
+import 'package:mobile_app_skeleton/pages/home/page_navigator.dart';
+import 'package:mobile_app_skeleton/pages/home/widgets/nav_bar_preferences_editor.dart';
+import 'package:mobile_app_skeleton/widgets/app_segmented_triple_control.dart';
 
 class OnboardingPage extends StatefulWidget {
   final GlobalKey<NavigatorState> mainNavigatorKey;
@@ -21,6 +23,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
   // 0 = system, 1 = light, 2 = dark
   int _selectedTheme = 0;
   bool _useSystemTextScaling = false;
+  List<PageItem> _navBarOrder = PageItem.values.toList();
+  Set<PageItem> _hiddenNavBarItems = <PageItem>{};
 
   void _applySettings() {
     final settingsController = AppScope.of(context).settings;
@@ -34,6 +38,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
         useSystemDarkmode: useSystemDarkmode,
         useDarkmode: useDarkmode,
         useSystemTextScaling: _useSystemTextScaling,
+        navBarItemOrder: pageItemIds(_navBarOrder),
+        hiddenNavBarItems: pageItemIds(_hiddenNavBarItems),
         didCompleteOnboarding: true,
       ),
     );
@@ -73,6 +79,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ? 2
               : 1;
       _useSystemTextScaling = settings.useSystemTextScaling;
+      _navBarOrder = orderedPageItemsFromSettings(settings.navBarItemOrder);
+      _hiddenNavBarItems =
+          hiddenPageItemsFromSettings(settings.hiddenNavBarItems);
       _hydrated = true;
     }
 
@@ -94,8 +103,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(context.l10n.appTitle,
-                                style: theme.textTheme.displayMedium),
+                            Text(
+                              context.l10n.appTitle,
+                              style: theme.textTheme.displayMedium,
+                            ),
                             const SizedBox(height: 10),
                             Text(
                               context.l10n.onboardingIntroBody,
@@ -111,39 +122,58 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(30, 60, 30, 30),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(context.l10n.onboardingPreferencesTitle,
-                                style: theme.textTheme.displayMedium),
-                            const SizedBox(height: 20),
-                            Text(context.l10n.themeLabel,
-                                style: theme.textTheme.headlineSmall),
-                            const SizedBox(height: 10),
-                            AppSegmentedTripleControl(
-                              leftTitle: 'System',
-                              centerTitle: 'Light',
-                              rightTitle: 'Dark',
-                              initialSelection: _selectedTheme,
-                              onChanged: (selected) {
-                                setState(() => _selectedTheme = selected);
-                                _applyPreviewSettings();
-                              },
-                            ),
-                            const SizedBox(height: 24),
-                            Text(context.l10n.accessibilityLabel,
-                                style: theme.textTheme.headlineSmall),
-                            const SizedBox(height: 10),
-                            SwitchListTile.adaptive(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(context.l10n.useSystemTextScaling),
-                              value: _useSystemTextScaling,
-                              onChanged: (val) {
-                                setState(() => _useSystemTextScaling = val);
-                                _applyPreviewSettings();
-                              },
-                            ),
-                          ],
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                context.l10n.onboardingPreferencesTitle,
+                                style: theme.textTheme.displayMedium,
+                              ),
+                              const SizedBox(height: 20),
+                              Text(
+                                context.l10n.themeLabel,
+                                style: theme.textTheme.headlineSmall,
+                              ),
+                              const SizedBox(height: 10),
+                              AppSegmentedTripleControl(
+                                leftTitle: 'System',
+                                centerTitle: 'Light',
+                                rightTitle: 'Dark',
+                                initialSelection: _selectedTheme,
+                                onChanged: (selected) {
+                                  setState(() => _selectedTheme = selected);
+                                  _applyPreviewSettings();
+                                },
+                              ),
+                              const SizedBox(height: 24),
+                              Text(
+                                context.l10n.accessibilityLabel,
+                                style: theme.textTheme.headlineSmall,
+                              ),
+                              const SizedBox(height: 10),
+                              SwitchListTile.adaptive(
+                                contentPadding: EdgeInsets.zero,
+                                title: Text(context.l10n.useSystemTextScaling),
+                                value: _useSystemTextScaling,
+                                onChanged: (val) {
+                                  setState(() => _useSystemTextScaling = val);
+                                  _applyPreviewSettings();
+                                },
+                              ),
+                              const SizedBox(height: 24),
+                              NavBarPreferencesEditor(
+                                orderedItems: _navBarOrder,
+                                hiddenItems: _hiddenNavBarItems,
+                                onOrderChanged: (items) {
+                                  setState(() => _navBarOrder = items);
+                                },
+                                onHiddenItemsChanged: (items) {
+                                  setState(() => _hiddenNavBarItems = items);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -174,9 +204,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           }
                           _applySettings();
                         },
-                        child: Text(_pageIndex == 0
-                            ? context.l10n.next
-                            : context.l10n.finish),
+                        child: Text(
+                          _pageIndex == 0
+                              ? context.l10n.next
+                              : context.l10n.finish,
+                        ),
                       ),
                     ],
                   ),

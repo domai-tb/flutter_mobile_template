@@ -32,6 +32,10 @@
   "languageGerman": "Deutsch",
   "accessibilityLabel": "Barrierefreiheit",
   "useSystemTextScaling": "System-Textskalierung verwenden",
+  "navigationLabel": "Navigation",
+  "navigationOrderHint": "Menuepunkte per Drag-and-drop neu anordnen.",
+  "navigationVisibilityLabel": "In der Navigation anzeigen",
+  "navigationSettingsAlwaysVisibleHint": "Seite 6 bleibt sichtbar, damit Einstellungen erreichbar bleiben.",
 
   "walletPlaceholderBody": "Platzhalter fuer eine Wallet-aehnliche Funktion.",
   "primaryAction": "Primaere Aktion",

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:mobile_app_skeleton/core/app_scope.dart';
+import 'package:mobile_app_skeleton/core/settings.dart';
 import 'package:mobile_app_skeleton/pages/home/page_navigator.dart';
 import 'package:mobile_app_skeleton/pages/home/widgets/page_navigation_animation.dart';
 import 'package:mobile_app_skeleton/pages/home/widgets/bottom_nav_bar.dart';
@@ -63,14 +65,16 @@ class HomePageState extends State<HomePage> {
     systemNavigationBarColor: Color.fromRGBO(17, 25, 38, 1), // Android
     systemNavigationBarIconBrightness: Brightness.light, // Android
   );
-  final SystemUiOverlayStyle lightTabletSystemUiStyle = const SystemUiOverlayStyle(
+  final SystemUiOverlayStyle lightTabletSystemUiStyle =
+      const SystemUiOverlayStyle(
     statusBarBrightness: Brightness.light, // iOS
     statusBarColor: Color.fromRGBO(245, 246, 250, 1), // Android
     statusBarIconBrightness: Brightness.dark, // Android
     systemNavigationBarColor: Color.fromRGBO(245, 246, 250, 1), // Android
     systemNavigationBarIconBrightness: Brightness.dark, // Android
   );
-  final SystemUiOverlayStyle darkTabletSystemUiStyle = const SystemUiOverlayStyle(
+  final SystemUiOverlayStyle darkTabletSystemUiStyle =
+      const SystemUiOverlayStyle(
     statusBarBrightness: Brightness.dark, // iOS
     statusBarColor: Color.fromRGBO(17, 25, 38, 1), // Android
     statusBarIconBrightness: Brightness.light, // Android
@@ -80,6 +84,8 @@ class HomePageState extends State<HomePage> {
 
   /// Holds the currently active page.
   PageItem currentPage = PageItem.page1;
+  late SettingsController _settingsController;
+  bool _settingsWired = false;
 
   /// Controls the Page View
   final PageController pageController = PageController();
@@ -87,6 +93,17 @@ class HomePageState extends State<HomePage> {
 
   /// Indicates whether swiping is disabled
   bool swipeDisabled = false;
+
+  List<PageItem> get _orderedPages => orderedPageItemsFromSettings(
+        _settingsController.settings.navBarItemOrder,
+      );
+
+  Set<PageItem> get _hiddenPages => hiddenPageItemsFromSettings(
+        _settingsController.settings.hiddenNavBarItems,
+      );
+
+  List<PageItem> get _visiblePages =>
+      _orderedPages.where((page) => !_hiddenPages.contains(page)).toList();
 
   /// Temporarily disable swiping for certain pages e.g. in app web view
   void setSwipeDisabled({bool disableSwipe = false}) {
@@ -99,11 +116,13 @@ class HomePageState extends State<HomePage> {
   Future<bool> selectedPage(PageItem selectedPageItem) async {
     if (selectedPageItem == currentPage) return true;
 
+    final pages = _visiblePages;
+    if (!pages.contains(selectedPageItem)) return false;
+
     // Phone Layout
     if (MediaQuery.of(context).size.shortestSide < 600) {
-      // Get all pages as list and find the corresponding element
-      final List<PageItem> pages = navigatorKeys.keys.toList();
-      final int indexNewPage = pages.indexWhere((element) => element == selectedPageItem);
+      final int indexNewPage =
+          pages.indexWhere((element) => element == selectedPageItem);
 
       // Switch to the selected page
       await pageController.animateToPage(
@@ -121,7 +140,9 @@ class HomePageState extends State<HomePage> {
       // Switch to the new page
       setState(() => currentPage = selectedPageItem);
       // Start the entry animation of the new page
-      await entryAnimationKeys[selectedPageItem]?.currentState?.startEntryAnimation();
+      await entryAnimationKeys[selectedPageItem]
+          ?.currentState
+          ?.startEntryAnimation();
     }
 
     // Enable swiping upon navigation
@@ -157,6 +178,32 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  void _handleSettingsChanged() {
+    if (!mounted) return;
+
+    final visiblePages = _visiblePages;
+    if (visiblePages.isEmpty) return;
+
+    final nextPage =
+        visiblePages.contains(currentPage) ? currentPage : visiblePages.first;
+    final nextIndex = visiblePages.indexOf(nextPage);
+
+    if (pageController.hasClients) {
+      final currentIndex =
+          pageController.page?.round() ?? pageController.initialPage;
+      if (currentIndex != nextIndex) {
+        pageController.jumpToPage(nextIndex);
+      }
+    }
+
+    if (currentPage != nextPage) {
+      setState(() => currentPage = nextPage);
+      return;
+    }
+
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -167,7 +214,26 @@ class HomePageState extends State<HomePage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_settingsWired) return;
+
+    _settingsController = AppScope.of(context).settings;
+    _settingsController.addListener(_handleSettingsChanged);
+
+    final visiblePages = _visiblePages;
+    if (visiblePages.isNotEmpty) {
+      currentPage = visiblePages.first;
+    }
+
+    _settingsWired = true;
+  }
+
+  @override
   void dispose() {
+    if (_settingsWired) {
+      _settingsController.removeListener(_handleSettingsChanged);
+    }
     pageController.dispose();
     super.dispose();
   }
@@ -177,6 +243,7 @@ class HomePageState extends State<HomePage> {
     final theme = Theme.of(context);
     final isPhone = MediaQuery.of(context).size.shortestSide < 600;
     final isLight = theme.brightness == Brightness.light;
+    final visiblePages = _visiblePages;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: isPhone
@@ -184,7 +251,7 @@ class HomePageState extends State<HomePage> {
           : (isLight ? lightTabletSystemUiStyle : darkTabletSystemUiStyle),
       child: PopScope(
         canPop: false,
-        onPopInvoked: (didPop) {
+        onPopInvokedWithResult: (didPop, _) {
           if (didPop) return;
           final nav = navigatorKeys[currentPage]?.currentState;
           if (nav == null) return;
@@ -200,16 +267,17 @@ class HomePageState extends State<HomePage> {
                   child: Stack(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(bottom: Platform.isIOS ? 80 : 60),
+                        padding:
+                            EdgeInsets.only(bottom: Platform.isIOS ? 80 : 60),
                         child: PageView.builder(
-                          physics: swipeDisabled ? const NeverScrollableScrollPhysics() : const ScrollPhysics(),
+                          physics: swipeDisabled
+                              ? const NeverScrollableScrollPhysics()
+                              : const ScrollPhysics(),
                           controller: pageController,
-                          itemCount: navigatorKeys.length,
+                          itemCount: visiblePages.length,
                           onPageChanged: (page) {
-                            final List<PageItem> pages = navigatorKeys.keys.toList();
-
                             // Find new PageItem and assign newPage the old value in case no element is found
-                            final PageItem newPage = pages[page];
+                            final PageItem newPage = visiblePages[page];
 
                             // Set newPage as the currentPage
                             if (newPage != currentPage) {
@@ -233,7 +301,7 @@ class HomePageState extends State<HomePage> {
                                           : 1 - (pagePosition - index),
                               duration: const Duration(milliseconds: 100),
                               child: buildNavigator(
-                                navigatorKeys.keys.toList()[index],
+                                visiblePages[index],
                               ),
                             );
                           },
@@ -244,6 +312,7 @@ class HomePageState extends State<HomePage> {
                         alignment: Alignment.bottomCenter,
                         child: BottomNavBar(
                           currentPage: currentPage,
+                          pages: visiblePages,
                           onSelectedPage: selectedPage,
                         ),
                       ),
@@ -253,19 +322,24 @@ class HomePageState extends State<HomePage> {
               // Tablet layout
               : SafeArea(
                   child: Container(
-                    color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
+                    color: isLight
+                        ? const Color.fromRGBO(245, 246, 250, 1)
+                        : theme.cardColor,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
                           height: 20,
-                          color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
+                          color: isLight
+                              ? const Color.fromRGBO(245, 246, 250, 1)
+                              : theme.cardColor,
                         ),
                         Expanded(
                           child: Row(
                             children: [
                               SideNavBar(
                                 currentPage: currentPage,
+                                pages: visiblePages,
                                 onSelectedPage: selectedPage,
                               ),
                               // Pages
@@ -278,16 +352,13 @@ class HomePageState extends State<HomePage> {
                                   ),
                                   child: Center(
                                     child: SizedBox(
-                                      width: currentPage != PageItem.page3 ? 550 : null,
+                                      width: currentPage != PageItem.page3
+                                          ? 550
+                                          : null,
                                       child: Stack(
-                                        children: [
-                                          buildOffstateNavigator(PageItem.page1),
-                                          buildOffstateNavigator(PageItem.page2),
-                                          buildOffstateNavigator(PageItem.page3),
-                                          buildOffstateNavigator(PageItem.page4),
-                                          buildOffstateNavigator(PageItem.page5),
-                                          buildOffstateNavigator(PageItem.page6),
-                                        ],
+                                        children: visiblePages
+                                            .map(buildOffstateNavigator)
+                                            .toList(),
                                       ),
                                     ),
                                   ),
@@ -296,14 +367,18 @@ class HomePageState extends State<HomePage> {
                               // Detail space
                               Container(
                                 width: 20,
-                                color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
+                                color: isLight
+                                    ? const Color.fromRGBO(245, 246, 250, 1)
+                                    : theme.cardColor,
                               ),
                             ],
                           ),
                         ),
                         Container(
                           height: 20,
-                          color: isLight ? const Color.fromRGBO(245, 246, 250, 1) : theme.cardColor,
+                          color: isLight
+                              ? const Color.fromRGBO(245, 246, 250, 1)
+                              : theme.cardColor,
                         ),
                       ],
                     ),
