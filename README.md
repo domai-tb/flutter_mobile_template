@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This template is not actively maintained anymore. Use [domai-tb/flutter_template](https://github.com/domai-tb/flutter_template) instead!
+
 # Flutter Mobile App Skeleton
 
 This repository is a Flutter mobile app template that preserves an opinionated app shell:
